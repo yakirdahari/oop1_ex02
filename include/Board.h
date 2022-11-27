@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include <vector>
 #include "Location.h"
