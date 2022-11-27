@@ -8,6 +8,7 @@ set(OLD_GLOB
   "Board.h"
   "Controller.h"
   "Location.h"
+  "Player.h"
   "io.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

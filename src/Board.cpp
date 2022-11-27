@@ -1,8 +1,5 @@
 #include "Board.h"
 
-using std::cout;
-using std::endl;
-
 // Opening file
 Board::Board() :m_file("Board.txt"), m_mapCount (0)
 {
@@ -12,24 +9,60 @@ Board::Board() :m_file("Board.txt"), m_mapCount (0)
 	}
 }
 
+bool Board::isValid(vector<string> map)
+{
+	int pacmanCount = 0,
+		doorCount = 0,
+		keyCount = 0;
+	bool moreThanOneCookie = false;
+	char c; //string line;
+
+	for (int i = 0; i < map.size(); i++)
+	{
+		for (int x = 0; x < map[i].size(); x++)
+		{ 
+			//line.push_back(map[i]);
+			switch (c = map[i][x])
+			{
+			case PACMAN: pacmanCount++;
+				break;
+			case COOKIE: moreThanOneCookie = true;
+				break;
+			case DOOR: doorCount++;
+				break;
+			case KEY: keyCount++;
+				break;
+			}
+		}
+	}
+	return (doorCount == keyCount) && 
+		   (pacmanCount == 1)      && 
+		    moreThanOneCookie ? true : false;
+}
+
 // Building board
-void Board::Build()
+void Board::Build(Player& pacman)
 {
 	while (!m_file.eof())
 	{
-		auto row = 0;
-		std::vector<std::string> col;
-		std::string line;
+		vector<string> map;
+		string line;
 		std::getline(m_file, line);
-		auto iss = std::istringstream(line);
-		iss >> row;
-		line.clear();
+		int row = stoi(line);
 		for (int i = 0; i < row; i++)
 		{
 			std::getline(m_file, line);
-			col.push_back(line);
+			map.push_back(line);
 		}
-		m_maps.push_back(col);
+		if (isValid(map))  // if map is valid
+		{
+			m_maps.push_back(map);
+		}
+		else
+		{
+			cout << "Wrong Board.txt format!\n";
+			exit(EXIT_FAILURE);
+		}
 
 		std::getline(m_file, line);
 	}

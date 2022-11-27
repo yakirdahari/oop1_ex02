@@ -203,10 +203,10 @@
 			},
 			"sourceIndexes" : 
 			[
-				4,
 				5,
 				6,
-				7
+				7,
+				8
 			]
 		}
 	],
@@ -251,17 +251,18 @@
 				0,
 				1,
 				2,
-				3
+				3,
+				4
 			]
 		},
 		{
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				4,
 				5,
 				6,
-				7
+				7,
+				8
 			]
 		}
 	],
@@ -280,6 +281,11 @@
 		{
 			"backtrace" : 9,
 			"path" : "include/Location.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 9,
+			"path" : "include/Player.h",
 			"sourceGroupIndex" : 0
 		},
 		{

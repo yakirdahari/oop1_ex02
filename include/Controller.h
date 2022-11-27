@@ -4,7 +4,7 @@
 #include <cstdlib> // for std::system()
 #include "io.h"
 #include <conio.h>
-//#include "Player.h"
+#include "Player.h"
 #include "Board.h"
 #include <Windows.h>
 //#include "Enemy.h"
