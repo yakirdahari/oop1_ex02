@@ -13,7 +13,7 @@ set(OLD_GLOB
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
-  file(TOUCH_NOCREATE "C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs")
+  file(TOUCH_NOCREATE "C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/Mingw64-Debug/CMakeFiles/cmake.verify_globs")
 endif()
 
 # MY_SOURCE_FILES at src/CMakeLists.txt:1 (file)
@@ -21,11 +21,10 @@ file(GLOB NEW_GLOB LIST_DIRECTORIES false RELATIVE "C:/Users/Yakir/Desktop/oop1_
 set(OLD_GLOB
   "Board.cpp"
   "Controller.cpp"
-  "Player.cpp"
   "io.cpp"
   "main.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
-  file(TOUCH_NOCREATE "C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs")
+  file(TOUCH_NOCREATE "C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/Mingw64-Debug/CMakeFiles/cmake.verify_globs")
 endif()

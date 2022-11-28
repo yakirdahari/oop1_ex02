@@ -1,10 +1,8 @@
 # ninja log v5
-7	38	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af
-56	6963	6912840436426310	CMakeFiles/oop1_ex02.dir/src/Pacman.cpp.obj	dd8414c0145949bf
+11	69	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af
 36	6476	6912888910945010	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	c731018334371200
 65	1672	6912750362966448	CMakeFiles/oop1_ex02.dir/src/io.cpp.obj	a7a5779c6d32fb5e
 34	6431	6912888910504954	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	f0d58f651b881dbb
 40	5534	6912885844226134	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	efd7b63f57a29ecc
 6182	6389	6912840773084833	oop1_ex02.exe	66f349d97b691ad7
-40	315	6912890306354940	build.ninja	3d3dc1e06d05caa4
-11	69	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af
+40	315	6913435936783357	build.ninja	3d3dc1e06d05caa4
