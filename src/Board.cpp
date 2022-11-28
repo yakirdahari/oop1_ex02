@@ -15,8 +15,10 @@ Board::Board() :m_file("Board.txt"), m_cookieCount (0)
 bool Board::isValid(vector<string> map, Player& player)
 {
 	int pacmanCount = 0,
+		cookieCount = 0,
 		doorCount = 0,
 		keyCount = 0;
+
 	bool moreThanOneCookie = false;
 	char c;
 
@@ -31,7 +33,7 @@ bool Board::isValid(vector<string> map, Player& player)
 						 player.addSpawn(x, i);
 				break;
 			case COOKIE: moreThanOneCookie = true;
-				         m_cookieCount++;
+				         cookieCount++;
 				break;
 			case DOOR: doorCount++;
 				break;
@@ -40,6 +42,8 @@ bool Board::isValid(vector<string> map, Player& player)
 			}
 		}
 	}
+	m_cookieCount.push_back(cookieCount);
+
 	return (doorCount == keyCount) && 
 		   (pacmanCount == 1)      && 
 		    moreThanOneCookie ? true : false;
@@ -77,11 +81,13 @@ void Board::updateMap(Player& player)
 {
 	system("cls");
 	
+	//int level = player.getLevel() + 1;
+
 	for (int i = 0 ; i < m_map.size(); i++)
 	{
 		cout << m_map[i] << endl;
 	}
-	std::cout << "Level: " << player.getLevel() <<
+	std::cout << "Level: " << player.getLevel() +1 <<
 		" Lives: " << player.getLives() <<
 		" Points: " << player.getPoints() << endl;
 }
@@ -96,7 +102,7 @@ bool Board::canMove(Player& player, const Location new_loc)
 	if (m_map[new_loc.row][new_loc.col] == COOKIE)
 	{
 		player.givePoints(2);
-		m_cookieCount--;
+		m_cookieCount[player.getLevel()]--;
 	}
 	m_map[loc.row][loc.col] = ' ';
 	m_map[new_loc.row][new_loc.col] = 'a';
@@ -113,7 +119,7 @@ void Board::move(Player& player, int key)
 	{
 	case KB_Up:
 		new_loc.row--;
-		if (canMove(player, new_loc));
+		if (canMove(player, new_loc))
 		{
 			updateMap(player);
 		}
@@ -144,18 +150,18 @@ void Board::move(Player& player, int key)
 
 void Board::loadLevel(Player& player)
 {
-	string line;
-	int lvl = player.getLevel();
-	for (int i = 0 ; i < m_maps[lvl].size() ; i++)
+	m_map.clear();
+	int level = player.getLevel();
+	for (int i = 0 ; i < m_maps[level].size() ; i++)
 	{
-		string line = m_maps[player.getLevel()][i];
+		string line = m_maps[level][i];
 		m_map.push_back(line);
 	}
 }
 
-int Board::getCookieCount()
+int Board::getCookieCount(Player& player)
 {
-	return m_cookieCount;
+	return m_cookieCount[player.getLevel()];
 }
 
 // Closing file

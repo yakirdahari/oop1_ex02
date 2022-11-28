@@ -24,13 +24,11 @@ public:
 	void move(Player& player, int key);
 	void loadLevel(Player& player);
 	char getLocation(const int col, const int row) const;
-	int getCookieCount();
-	void resetLevel();
-	char objectLocation();
+	int getCookieCount(Player& player);
 	~Board();
 
 private:
-	int m_cookieCount;  // how many cookies in the map
+	vector<int> m_cookieCount;  // amount of cookies per map
 	vector<string> m_map;  // current map
 	vector<vector<string>> m_maps;  // map list
 	// vector<enemy> enemies;

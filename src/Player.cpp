@@ -8,7 +8,6 @@ Player::Player()
 {
 }
 
-
 void Player::setLocation(Location loc)
 {
 	m_location.col = loc.col;
@@ -24,8 +23,7 @@ void Player::addSpawn(int col, int row)
 
 void Player::setSpawn()
 {
-	int a = m_level - 1;
-	Location spawn = m_spawnList[a];
+	Location spawn = m_spawnList[getLevel()];
 	setLocation(spawn);
 }
 
@@ -56,8 +54,7 @@ void Player::givePoints(int x)
 
 Location Player::getSpawn() const
 {
-	int a = m_level - 1;
-	return m_spawnList[a];
+	return m_spawnList[getLevel()];
 }
 
 Location Player::getLocation() const

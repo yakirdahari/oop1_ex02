@@ -25,12 +25,24 @@ void Controller::run()
             handleRegularKey(c);
             break;
         }
+        if (m_board.getCookieCount(m_player) == 0 &&
+            m_player.getLevel() +1 != 2)
+        {
+            m_player.levelUp();
+            m_board.loadLevel(m_player);
+            m_board.updateMap(m_player);
+            m_player.setSpawn();
+        }
     }
 }
 
 bool Controller::GameOver()
 {
-    if (m_player.getLives() == 0)
+    int lives = m_player.getLives();
+    int level = m_player.getLevel() +1;
+    int cookieCount = m_board.getCookieCount(m_player);
+
+    if (lives == 0 || level == 2 && cookieCount == 0)
     {
         return true; // RIP
     }
