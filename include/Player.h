@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Controller.h"
+#include "Location.h"
 
 class Controller; // Forward declaration
 class Board;
@@ -13,6 +13,7 @@ public:
 	void setLocation(int col, int row);
 	void handleSpecialKey(Player pacman, Board& board);
 	int getPoints()const;
+	~Player();
 
 private:
 	Location m_location;

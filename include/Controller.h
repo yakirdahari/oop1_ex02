@@ -1,13 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <cstdlib> // for std::system()
-#include "io.h"
-#include <conio.h>
 #include "Player.h"
 #include "Board.h"
-#include <Windows.h>
-//#include "Enemy.h"
 
 class Controller
 {
@@ -20,6 +15,6 @@ public:
 private:
 	int m_lvl;  // current level
 	Board m_board;
-	//Player m_player;
+	Player m_player;
 	//Enemy* m_enemies;
 };

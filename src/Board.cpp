@@ -15,14 +15,14 @@ bool Board::isValid(vector<string> map)
 		doorCount = 0,
 		keyCount = 0;
 	bool moreThanOneCookie = false;
-	char c; //string line;
+	char c;
 
 	for (int i = 0; i < map.size(); i++)
 	{
 		for (int x = 0; x < map[i].size(); x++)
 		{ 
-			//line.push_back(map[i]);
-			switch (c = map[i][x])
+			c = map[i][x];
+			switch (c)
 			{
 			case PACMAN: pacmanCount++;
 				break;
@@ -41,7 +41,7 @@ bool Board::isValid(vector<string> map)
 }
 
 // Building board
-void Board::Build(Player& pacman)
+void Board::Build(Player& player)
 {
 	while (!m_file.eof())
 	{
@@ -54,7 +54,7 @@ void Board::Build(Player& pacman)
 			std::getline(m_file, line);
 			map.push_back(line);
 		}
-		if (isValid(map))  // if map is valid
+		if (isValid(map))
 		{
 			m_maps.push_back(map);
 		}

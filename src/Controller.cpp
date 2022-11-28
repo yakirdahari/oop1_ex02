@@ -7,9 +7,8 @@ Controller::Controller() : m_lvl(0)
 
 void Controller::run()
 {
-	Player p;
+	m_board.Build(m_player);
 	m_board.Update(m_lvl);
-	m_board.Build(p);
 }
 
 Controller::~Controller()

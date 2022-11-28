@@ -1,5 +1,7 @@
 #include "Player.h"
 
+class Controller;
+
 Player::Player() :m_location(0, 0), m_spawn(0, 0)
 {
 }

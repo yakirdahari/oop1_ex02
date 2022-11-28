@@ -6,16 +6,13 @@
 #include <cstdlib>
 #include <vector>
 #include "Location.h"
-//#include "Enemy.h"
 
 using std::vector;
 using std::string;
 using std::cout;
 using std::endl;
 
-class Controller;
 class Player;
-//class Enemy;
 class Board
 {
 public:
