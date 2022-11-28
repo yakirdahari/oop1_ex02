@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<DEFECTS></DEFECTS>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\Yakir\Desktop\oop1_ex02- Yakir_Dahari\src\</FILEPATH>
+      <FILENAME>Board.cpp</FILENAME>
+      <LINE>151</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>6246</DEFECTCODE>
+    <DESCRIPTION>Local declaration of 'line' hides declaration of the same name in outer scope. For additional information, see previous declaration at line '147' of 'c:\users\yakir\desktop\oop1_ex02- yakir_dahari\src\board.cpp'.</DESCRIPTION>
+    <FUNCTION>Board::loadLevel</FUNCTION>
+    <DECORATED>?loadLevel@Board@@QEAAXAEAVPlayer@@@Z</DECORATED>
+    <FUNCLINE>145</FUNCLINE>
+    <PATH>
+      <SFA>
+        <FILEPATH>C:\Users\Yakir\Desktop\oop1_ex02- Yakir_Dahari\src\</FILEPATH>
+        <FILENAME>Board.cpp</FILENAME>
+        <LINE>147</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>

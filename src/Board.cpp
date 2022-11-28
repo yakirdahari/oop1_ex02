@@ -1,7 +1,8 @@
 #include "Board.h"
+#include "Controller.h"
 
 // Opening file
-Board::Board() :m_file("Board.txt"), m_mapCount (0)
+Board::Board() :m_file("Board.txt"), m_cookieCount (0)
 {
 	if (!m_file.is_open()) {
 		cout << "Error in opening file" << endl;
@@ -9,7 +10,9 @@ Board::Board() :m_file("Board.txt"), m_mapCount (0)
 	}
 }
 
-bool Board::isValid(vector<string> map)
+// checking if given map is valid
+// also sets spawn location of player and enemies
+bool Board::isValid(vector<string> map, Player& player)
 {
 	int pacmanCount = 0,
 		doorCount = 0,
@@ -25,8 +28,10 @@ bool Board::isValid(vector<string> map)
 			switch (c)
 			{
 			case PACMAN: pacmanCount++;
+						 player.addSpawn(x, i);
 				break;
 			case COOKIE: moreThanOneCookie = true;
+				         m_cookieCount++;
 				break;
 			case DOOR: doorCount++;
 				break;
@@ -54,7 +59,7 @@ void Board::Build(Player& player)
 			std::getline(m_file, line);
 			map.push_back(line);
 		}
-		if (isValid(map))
+		if (isValid(map, player))
 		{
 			m_maps.push_back(map);
 		}
@@ -63,23 +68,94 @@ void Board::Build(Player& player)
 			cout << "Wrong Board.txt format!\n";
 			exit(EXIT_FAILURE);
 		}
-
 		std::getline(m_file, line);
 	}
 }
 
 // Updating board
-void Board::Update(int lvl)
+void Board::updateMap(Player& player)
 {
 	system("cls");
 	
-	/*std::cout << "Level : " << m_player.getPoints() <<
-		         " Lives : " << m_player.getLife() << 
-		         " Points : " << m_player.getLevel() << endl;*/
-	for (int i = 0 ; i < m_maps[lvl].size(); i++)
+	for (int i = 0 ; i < m_map.size(); i++)
 	{
-		cout << m_maps[lvl][i] << endl;
+		cout << m_map[i] << endl;
 	}
+	std::cout << "Level: " << player.getLevel() <<
+		" Lives: " << player.getLives() <<
+		" Points: " << player.getPoints() << endl;
+}
+
+bool Board::canMove(Player& player, const Location new_loc)
+{
+	Location loc = player.getLocation();
+	if (m_map[new_loc.row][new_loc.col] == WALL)
+	{
+		return false;
+	}
+	if (m_map[new_loc.row][new_loc.col] == COOKIE)
+	{
+		player.givePoints(2);
+		m_cookieCount--;
+	}
+	m_map[loc.row][loc.col] = ' ';
+	m_map[new_loc.row][new_loc.col] = 'a';
+	player.setLocation(new_loc);
+	
+	return true;
+}
+
+void Board::move(Player& player, int key)
+{
+	Location new_loc = player.getLocation();
+
+	switch (key)
+	{
+	case KB_Up:
+		new_loc.row--;
+		if (canMove(player, new_loc));
+		{
+			updateMap(player);
+		}
+		break;
+	case KB_Down:
+		new_loc.row++;
+		if (canMove(player, new_loc))
+		{
+			updateMap(player);
+		}
+		break;
+	case KB_Left:
+		new_loc.col--;
+		if (canMove(player, new_loc))
+		{
+			updateMap(player);
+		}
+		break;
+	case KB_Right:
+		new_loc.col++;
+		if (canMove(player, new_loc))
+		{
+			updateMap(player);
+		}
+		break;
+	}
+}
+
+void Board::loadLevel(Player& player)
+{
+	string line;
+	int lvl = player.getLevel();
+	for (int i = 0 ; i < m_maps[lvl].size() ; i++)
+	{
+		string line = m_maps[player.getLevel()][i];
+		m_map.push_back(line);
+	}
+}
+
+int Board::getCookieCount()
+{
+	return m_cookieCount;
 }
 
 // Closing file

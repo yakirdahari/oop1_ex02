@@ -1,6 +1,5 @@
 #pragma once
 
-#define LIFE 3
 #define PACMAN 'a'
 #define SUPERPACMAN '@'
 #define ENEMY '&'
@@ -12,7 +11,7 @@
 
 struct Location
 {
-    explicit Location(int row, int col) : row(row), col(col) {}
+    explicit Location(int col, int row) : col(col), row(row) {}
     int row;
     int col;
 };
