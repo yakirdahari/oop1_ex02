@@ -21,7 +21,8 @@ public:
 	void givePoints(int x);
 	Location getSpawn()const;
 	Location getLocation()const;
-	bool isSuperPacman()const;
+	void superPacman();
+	bool isSuperPacman();
 	~Player();
 
 private:

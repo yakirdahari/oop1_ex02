@@ -121,21 +121,22 @@ bool Board::canMove(Player& player, const Location new_loc)
 	case KEY: 
 		openRandomDoor(level);
 		break;
+	case GIFT:
+		player.superPacman();
+		break;
 	}
-
-	if (m_map[new_loc.row][new_loc.col] == WALL)
+	if (player.isSuperPacman())
 	{
-		return false;
+		m_map[loc.row][loc.col] = ' ';
+		m_map[new_loc.row][new_loc.col] = '@';
+		player.setLocation(new_loc);
 	}
-
-	if (m_map[new_loc.row][new_loc.col] == COOKIE)
+	else
 	{
-		
+		m_map[loc.row][loc.col] = ' ';
+		m_map[new_loc.row][new_loc.col] = 'a';
+		player.setLocation(new_loc);
 	}
-	m_map[loc.row][loc.col] = ' ';
-	m_map[new_loc.row][new_loc.col] = 'a';
-	player.setLocation(new_loc);
-	
 	return true;
 }
 
@@ -161,12 +162,14 @@ void Board::move(Player& player, int key)
 		break;
 	case KB_Left:
 		new_loc.col--;
+		new_loc.col--;
 		if (canMove(player, new_loc))
 		{
 			updateMap(player);
 		}
 		break;
 	case KB_Right:
+		new_loc.col++;
 		new_loc.col++;
 		if (canMove(player, new_loc))
 		{

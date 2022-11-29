@@ -63,8 +63,17 @@ Location Player::getLocation() const
 	return m_location;
 }
 
-bool Player::isSuperPacman() const
+void Player::superPacman()
 {
+	m_movesLeft = 20;
+}
+
+bool Player::isSuperPacman()
+{
+	if (m_movesLeft != 0)
+	{
+		m_movesLeft--;
+	}
 	return m_movesLeft == 0 ? false : true;
 }
 
