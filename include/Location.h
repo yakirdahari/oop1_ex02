@@ -1,5 +1,6 @@
 #pragma once
 
+// basic game definitions
 #define PACMAN 'a'
 #define SUPERPACMAN '@'
 #define GHOST '&'
@@ -8,6 +9,12 @@
 #define KEY '%'
 #define COOKIE '*'
 #define GIFT '$'
+
+// directions to move ghost
+#define TOP_LEFT 1
+#define TOP_RIGHT 2
+#define BOTTOM_LEFT 3
+#define BOTTOM_RIGHT 4
 
 struct Location
 {

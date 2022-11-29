@@ -20,14 +20,16 @@ public:
 	bool isValid(vector<string> map, Player& player);
 	void Build(Player& player);
 	void updateMap(Player& player);
-	bool canPlayerMove(Player& player, const Location loc);
+	bool PlayerCanMove(Player& player, const Location loc);
 	bool movePlayer(Player& player, int key);
 	void moveGhosts(const Player& player);
 	void loadLevel(Player& player);
 	void openRandomDoor(const int level);
 	int getCookieCount(Player& player);
 	int getGhostCount(int level);
-	void canGhostMove(Location player_loc, Location ghost_loc);
+	string findWay(Location playerLoc, Location ghostLoc);
+	int countSpaces(int level, Location ghostLoc, string way);
+	bool GhostCanMove(int level, Location loc);
 	~Board();
 
 private:

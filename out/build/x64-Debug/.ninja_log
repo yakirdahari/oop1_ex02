@@ -30,3 +30,8 @@
 44	513	6914498895162236	CMakeFiles/oop1_ex02.dir/src/Ghost.cpp.obj	3bb126a1aee56537
 42	6268	6914498952733173	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	f0d58f651b881dbb
 46	6325	6914498953302990	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	c731018334371200
+3	42	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af
+46	7786	6914511342764966	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	f0d58f651b881dbb
+50	7852	6914511343484732	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	c731018334371200
+43	8501	6914511349960670	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	efd7b63f57a29ecc
+8501	8744	6914511351971566	oop1_ex02.exe	58c8fa4dfcafce1d

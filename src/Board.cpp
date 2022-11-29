@@ -108,7 +108,7 @@ void Board::updateMap(Player& player)
 		" Points: " << player.getPoints() << endl;
 }
 
-bool Board::canPlayerMove(Player& player, const Location new_loc)
+bool Board::PlayerCanMove(Player& player, const Location new_loc)
 {
 	Location loc = player.getLocation();
 	int level = player.getLevel();
@@ -159,14 +159,14 @@ bool Board::movePlayer(Player& player, int key)
 	{
 	case KB_Up:
 		new_loc.row--;
-		if (canPlayerMove(player, new_loc))
+		if (PlayerCanMove(player, new_loc))
 		{
 			return true;
 		}
 		break;
 	case KB_Down:
 		new_loc.row++;
-		if (canPlayerMove(player, new_loc))
+		if (PlayerCanMove(player, new_loc))
 		{
 			return true;
 		}
@@ -174,7 +174,7 @@ bool Board::movePlayer(Player& player, int key)
 	case KB_Left:
 		new_loc.col--;
 		new_loc.col--;
-		if (canPlayerMove(player, new_loc))
+		if (PlayerCanMove(player, new_loc))
 		{
 			return true;
 		}
@@ -182,7 +182,7 @@ bool Board::movePlayer(Player& player, int key)
 	case KB_Right:
 		new_loc.col++;
 		new_loc.col++;
-		if (canPlayerMove(player, new_loc))
+		if (PlayerCanMove(player, new_loc))
 		{
 			return true;
 		}
@@ -193,15 +193,34 @@ bool Board::movePlayer(Player& player, int key)
 
 void Board::moveGhosts(const Player& player)
 {
-	int level = player.getLevel();
-	Location player_loc = player.getLocation();
+	int level = player.getLevel(),
+		whichWay;
+
+	Location playerLoc = player.getLocation();
 
 	for (int i = 0; i < m_ghosts[level].size() ; i++)
 	{
 		if (m_ghosts[level][i].isAlive())
 		{
-			Location ghost_loc = m_ghosts[level][i].getLocation();
-			canGhostMove(player_loc, ghost_loc);
+			Location ghostLoc = m_ghosts[level][i].getLocation();
+			whichWay = findWay();  // finds which side to go
+
+			switch (whichWay)
+			{
+			case TOP_LEFT:
+				int top = countSpaces(level, ghostLoc, "top"),
+					left = countSpaces(level, ghostLoc, "left");
+				break;
+			case TOP_RIGHT:
+				break;
+			case BOTTOM_RIGHT:
+				break;
+			case BOTTOM_LEFT:
+				break;
+			}
+
+			//Location new_loc = find_way()
+			//canGhostMove(player_loc, ghost_loc);
 		}
 	}
 }
@@ -263,9 +282,23 @@ int Board::getGhostCount(int level)
 	return m_ghosts[level].size();
 }
 
-void Board::canGhostMove(Location player_loc, Location ghost_loc)
+string Board::findWay(Location playerLoc, Location ghostLoc)
 {
-	Location new_loc = 
+	if (ghostLoc.col < playerLoc.col &&
+		ghostLoc.col < playerLoc.col)
+	{
+		return "TOP_LEFT";
+	}
+}
+
+bool Board::GhostCanMove(int level, Location loc)
+{
+	if (m_map[loc.row][loc.col] == WALL ||
+		m_map[loc.row][loc.col] == DOOR)
+	{
+		return false;
+	}
+	return true;
 }
 
 // Closing file
