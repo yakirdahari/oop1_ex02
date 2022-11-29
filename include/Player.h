@@ -21,6 +21,7 @@ public:
 	void givePoints(int x);
 	Location getSpawn()const;
 	Location getLocation()const;
+	bool isSuperPacman()const;
 	~Player();
 
 private:
@@ -30,4 +31,5 @@ private:
 	int m_level;
 	int m_lives;
 	int m_points;
+	int m_movesLeft;  // how many moves left till super pacman is over
 };

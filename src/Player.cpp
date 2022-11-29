@@ -2,9 +2,10 @@
 
 class Controller;
 
-Player::Player() 
-	:m_location(0, 0), m_spawn(0, 0), 
-	 m_level(1), m_lives(3), m_points(0)
+Player::Player()
+	:m_location(0, 0), m_spawn(0, 0),
+	 m_level(1), m_lives(3), m_points(0),
+	 m_movesLeft(0)
 {
 }
 
@@ -60,6 +61,11 @@ Location Player::getSpawn() const
 Location Player::getLocation() const
 {
 	return m_location;
+}
+
+bool Player::isSuperPacman() const
+{
+	return m_movesLeft == 0 ? false : true;
 }
 
 Player::~Player()

@@ -2,7 +2,6 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <cstdlib>
 #include <vector>
 #include "Location.h"
@@ -23,7 +22,7 @@ public:
 	bool canMove(Player& player, const Location loc);
 	void move(Player& player, int key);
 	void loadLevel(Player& player);
-	char getLocation(const int col, const int row) const;
+	void openRandomDoor(const int level);
 	int getCookieCount(Player& player);
 	~Board();
 
@@ -31,6 +30,7 @@ private:
 	vector<int> m_cookieCount;  // amount of cookies per map
 	vector<string> m_map;  // current map
 	vector<vector<string>> m_maps;  // map list
+	vector<vector<Location>> m_doors;  // stores all door locations
 	// vector<enemy> enemies;
 	std::ifstream m_file;
 };

@@ -19,6 +19,9 @@ bool Board::isValid(vector<string> map, Player& player)
 		doorCount = 0,
 		keyCount = 0;
 
+	Location door(0, 0);
+	vector<Location> doors;
+
 	bool moreThanOneCookie = false;
 	char c;
 
@@ -36,6 +39,9 @@ bool Board::isValid(vector<string> map, Player& player)
 				         cookieCount++;
 				break;
 			case DOOR: doorCount++;
+				door.col = x;
+				door.row = i;
+				doors.push_back(door);
 				break;
 			case KEY: keyCount++;
 				break;
@@ -43,6 +49,7 @@ bool Board::isValid(vector<string> map, Player& player)
 		}
 	}
 	m_cookieCount.push_back(cookieCount);
+	m_doors.push_back(doors);
 
 	return (doorCount == keyCount) && 
 		   (pacmanCount == 1)      && 
@@ -95,14 +102,35 @@ void Board::updateMap(Player& player)
 bool Board::canMove(Player& player, const Location new_loc)
 {
 	Location loc = player.getLocation();
+	int level = player.getLevel();
+	char c = m_map[new_loc.row][new_loc.col];
+	
+	switch (c)
+	{
+	case WALL: return false;
+		break;
+	case COOKIE: 
+		player.givePoints(2);
+		m_cookieCount[level]--;
+		break;
+	case DOOR: 
+		if (!player.isSuperPacman())
+		{
+			return false;  // not super pacman
+		}
+	case KEY: 
+		openRandomDoor(level);
+		break;
+	}
+
 	if (m_map[new_loc.row][new_loc.col] == WALL)
 	{
 		return false;
 	}
+
 	if (m_map[new_loc.row][new_loc.col] == COOKIE)
 	{
-		player.givePoints(2);
-		m_cookieCount[player.getLevel()]--;
+		
 	}
 	m_map[loc.row][loc.col] = ' ';
 	m_map[new_loc.row][new_loc.col] = 'a';
@@ -157,6 +185,42 @@ void Board::loadLevel(Player& player)
 		string line = m_maps[level][i];
 		m_map.push_back(line);
 	}
+}
+
+void Board::openRandomDoor(const int level)
+{
+	srand(time(NULL));
+	int x = rand() % m_doors.size();
+	Location door = m_doors[level][x];
+	vector<Location> temp1;
+	vector<vector<Location>> temp2;
+
+	m_map[door.row][door.col] = ' ';  // poof random door is gone!
+
+	// my algorithm to remove random door x from the 2d vector of doors
+	// (1) we copy all doors of current level except x to temp1
+	// (2) we copy all door vectors of all levels except current level
+	// (3) for current level we copy temp1 which doesn't have x in it
+	// (4) temp2 is now m_doors without x in it so we copy temp2 to m_doors
+	for (int i = 0; i < m_doors[level].size(); i++)
+	{
+		if (i == x)
+		{
+			continue;
+		}
+		temp1.push_back(m_doors[level][i]);
+	}
+	for (int i = 0; i < m_doors.size(); i++)
+	{
+		if (i == level)
+		{
+			temp2.push_back(temp1);
+			continue;
+		}
+		temp2.push_back(m_doors[i]);
+	}
+	m_doors[level].clear();
+	m_doors = temp2;
 }
 
 int Board::getCookieCount(Player& player)
