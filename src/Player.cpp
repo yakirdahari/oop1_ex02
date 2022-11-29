@@ -70,11 +70,12 @@ void Player::superPacman()
 
 bool Player::isSuperPacman()
 {
-	if (m_movesLeft != 0)
+	if (m_movesLeft == 0)
 	{
-		m_movesLeft--;
+		return false;
 	}
-	return m_movesLeft == 0 ? false : true;
+	m_movesLeft--;
+	return true;  // still super pacman
 }
 
 Player::~Player()

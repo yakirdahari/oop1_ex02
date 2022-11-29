@@ -26,7 +26,7 @@ void Controller::run()
             break;
         }
         if (m_board.getCookieCount(m_player) == 0 &&
-            m_player.getLevel() +1 != 2)
+            m_player.getLevel() +1 != 3)
         {
             m_player.levelUp();
             m_board.loadLevel(m_player);
@@ -42,7 +42,7 @@ bool Controller::GameOver()
     int level = m_player.getLevel() +1;
     int cookieCount = m_board.getCookieCount(m_player);
 
-    if (lives == 0 || level == 2 && cookieCount == 0)
+    if (lives == 0 || level == 3 && cookieCount == 0)
     {
         return true; // RIP
     }
