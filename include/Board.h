@@ -5,13 +5,14 @@
 #include <cstdlib>
 #include <vector>
 #include "Location.h"
-#include "Player.h"
+#include "Ghost.h"
 
 using std::vector;
 using std::string;
 using std::cout;
 using std::endl;
 
+class Player;
 class Board
 {
 public:
@@ -19,11 +20,14 @@ public:
 	bool isValid(vector<string> map, Player& player);
 	void Build(Player& player);
 	void updateMap(Player& player);
-	bool canMove(Player& player, const Location loc);
-	void move(Player& player, int key);
+	bool canPlayerMove(Player& player, const Location loc);
+	bool movePlayer(Player& player, int key);
+	void moveGhosts(const Player& player);
 	void loadLevel(Player& player);
 	void openRandomDoor(const int level);
 	int getCookieCount(Player& player);
+	int getGhostCount(int level);
+	void canGhostMove(Location player_loc, Location ghost_loc);
 	~Board();
 
 private:
@@ -31,7 +35,7 @@ private:
 	vector<string> m_map;  // current map
 	vector<vector<string>> m_maps;  // map list
 	vector<vector<Location>> m_doors;  // stores all door locations
-	// vector<enemy> enemies;
+	vector<vector<Ghost>> m_ghosts;  // list of ghosts for each map
 	std::ifstream m_file;
 };
 

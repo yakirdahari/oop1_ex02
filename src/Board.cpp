@@ -21,6 +21,8 @@ bool Board::isValid(vector<string> map, Player& player)
 
 	Location door(0, 0);
 	vector<Location> doors;
+	vector<Ghost> ghosts;
+	Ghost ghost;
 
 	bool moreThanOneCookie = false;
 	char c;
@@ -35,6 +37,10 @@ bool Board::isValid(vector<string> map, Player& player)
 			case PACMAN: pacmanCount++;
 						 player.addSpawn(x, i);
 				break;
+			case GHOST: 
+				        ghost.setLocation(x, i);
+				        ghosts.push_back(ghost);
+				break;
 			case COOKIE: moreThanOneCookie = true;
 				         cookieCount++;
 				break;
@@ -48,8 +54,11 @@ bool Board::isValid(vector<string> map, Player& player)
 			}
 		}
 	}
+	// store vectors in 2d vectors
+	// each map has its own vector
 	m_cookieCount.push_back(cookieCount);
 	m_doors.push_back(doors);
+	m_ghosts.push_back(ghosts);
 
 	return (doorCount == keyCount) && 
 		   (pacmanCount == 1)      && 
@@ -99,7 +108,7 @@ void Board::updateMap(Player& player)
 		" Points: " << player.getPoints() << endl;
 }
 
-bool Board::canMove(Player& player, const Location new_loc)
+bool Board::canPlayerMove(Player& player, const Location new_loc)
 {
 	Location loc = player.getLocation();
 	int level = player.getLevel();
@@ -119,28 +128,30 @@ bool Board::canMove(Player& player, const Location new_loc)
 			return false;  // not super pacman
 		}
 	case KEY: 
+		player.givePoints(7);
 		openRandomDoor(level);
 		break;
 	case GIFT:
+		player.givePoints(5);
 		player.superPacman();
 		break;
 	}
 	if (player.isSuperPacman())
 	{
 		m_map[loc.row][loc.col] = ' ';
-		m_map[new_loc.row][new_loc.col] = '@';
+		m_map[new_loc.row][new_loc.col] = SUPERPACMAN;
 		player.setLocation(new_loc);
 	}
 	else
 	{
 		m_map[loc.row][loc.col] = ' ';
-		m_map[new_loc.row][new_loc.col] = 'a';
+		m_map[new_loc.row][new_loc.col] = PACMAN;
 		player.setLocation(new_loc);
 	}
 	return true;
 }
 
-void Board::move(Player& player, int key)
+bool Board::movePlayer(Player& player, int key)
 {
 	Location new_loc = player.getLocation();
 
@@ -148,34 +159,50 @@ void Board::move(Player& player, int key)
 	{
 	case KB_Up:
 		new_loc.row--;
-		if (canMove(player, new_loc))
+		if (canPlayerMove(player, new_loc))
 		{
-			updateMap(player);
+			return true;
 		}
 		break;
 	case KB_Down:
 		new_loc.row++;
-		if (canMove(player, new_loc))
+		if (canPlayerMove(player, new_loc))
 		{
-			updateMap(player);
+			return true;
 		}
 		break;
 	case KB_Left:
 		new_loc.col--;
 		new_loc.col--;
-		if (canMove(player, new_loc))
+		if (canPlayerMove(player, new_loc))
 		{
-			updateMap(player);
+			return true;
 		}
 		break;
 	case KB_Right:
 		new_loc.col++;
 		new_loc.col++;
-		if (canMove(player, new_loc))
+		if (canPlayerMove(player, new_loc))
 		{
-			updateMap(player);
+			return true;
 		}
 		break;
+	}
+	return false;  // no move made
+}
+
+void Board::moveGhosts(const Player& player)
+{
+	int level = player.getLevel();
+	Location player_loc = player.getLocation();
+
+	for (int i = 0; i < m_ghosts[level].size() ; i++)
+	{
+		if (m_ghosts[level][i].isAlive())
+		{
+			Location ghost_loc = m_ghosts[level][i].getLocation();
+			canGhostMove(player_loc, ghost_loc);
+		}
 	}
 }
 
@@ -229,6 +256,16 @@ void Board::openRandomDoor(const int level)
 int Board::getCookieCount(Player& player)
 {
 	return m_cookieCount[player.getLevel()];
+}
+
+int Board::getGhostCount(int level)
+{
+	return m_ghosts[level].size();
+}
+
+void Board::canGhostMove(Location player_loc, Location ghost_loc)
+{
+	Location new_loc = 
 }
 
 // Closing file

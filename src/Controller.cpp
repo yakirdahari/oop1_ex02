@@ -19,16 +19,23 @@ void Controller::run()
         {
         case 0:
         case SpecialKey:
-            handleSpecialKey();
+            if (handleSpecialKey())  // if moved
+            {
+                m_board.moveGhosts(m_player);
+                m_board.updateMap(m_player);
+            }
             break;
         default:
             handleRegularKey(c);
             break;
         }
+        // checking if reached next map and loading it
         if (m_board.getCookieCount(m_player) == 0 &&
             m_player.getLevel() +1 != 3)
         {
+            int ghostsLeft = m_board.getGhostCount(m_player.getLevel());
             m_player.levelUp();
+            m_player.givePoints( 50 + (ghostsLeft * 2) );
             m_board.loadLevel(m_player);
             m_board.updateMap(m_player);
             m_player.setSpawn();
@@ -48,25 +55,38 @@ bool Controller::GameOver()
     }
     return false;  // game not over
 }
-
-void Controller::handleSpecialKey()
+// key handler for player
+bool Controller::handleSpecialKey()
 {
     auto c = _getch();
     switch (c)
     {
     case KB_Up:
-        m_board.move(m_player, KB_Up);
+        if (m_board.movePlayer(m_player, KB_Up))
+        {
+            return true;
+        }    
         break;
     case KB_Down:
-        m_board.move(m_player, KB_Down);
+        if (m_board.movePlayer(m_player, KB_Down))
+        {
+            return true;
+        }
         break;
     case KB_Left:
-        m_board.move(m_player, KB_Left);
+        if (m_board.movePlayer(m_player, KB_Left))
+        {
+            return true;
+        }
         break;
     case KB_Right:
-        m_board.move(m_player, KB_Right);
+        if (m_board.movePlayer(m_player, KB_Right))
+        {
+            return true;
+        }
         break;
     }
+    return false;  // no move was made
 }
 void Controller::handleRegularKey(int c)
 {

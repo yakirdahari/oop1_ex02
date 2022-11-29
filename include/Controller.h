@@ -25,7 +25,7 @@ public:
 	Controller();
 	void run();
 	bool GameOver();
-	void handleSpecialKey();
+	bool handleSpecialKey();
 	void handleRegularKey(int c);
 	~Controller();
 

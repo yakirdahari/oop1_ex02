@@ -2,7 +2,7 @@
 
 #define PACMAN 'a'
 #define SUPERPACMAN '@'
-#define ENEMY '&'
+#define GHOST '&'
 #define WALL '#'
 #define DOOR 'D'
 #define KEY '%'
