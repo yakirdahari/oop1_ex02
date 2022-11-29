@@ -10,7 +10,7 @@
 #define COOKIE '*'
 #define GIFT '$'
 
-// directions to move ghost
+//directions to move ghost
 #define TOP_LEFT 1
 #define TOP_RIGHT 2
 #define BOTTOM_LEFT 3

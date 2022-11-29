@@ -27,7 +27,7 @@ public:
 	void openRandomDoor(const int level);
 	int getCookieCount(Player& player);
 	int getGhostCount(int level);
-	string findWay(Location playerLoc, Location ghostLoc);
+	int findWay(Location playerLoc, Location ghostLoc);
 	int countSpaces(int level, Location ghostLoc, string way);
 	bool GhostCanMove(int level, Location loc);
 	~Board();

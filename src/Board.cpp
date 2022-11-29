@@ -193,17 +193,17 @@ bool Board::movePlayer(Player& player, int key)
 
 void Board::moveGhosts(const Player& player)
 {
-	int level = player.getLevel(),
-		whichWay;
-
+	int level = player.getLevel();
 	Location playerLoc = player.getLocation();
+	int whichWay;
 
+	// go through each ghost in the map that is alive
 	for (int i = 0; i < m_ghosts[level].size() ; i++)
 	{
 		if (m_ghosts[level][i].isAlive())
 		{
 			Location ghostLoc = m_ghosts[level][i].getLocation();
-			whichWay = findWay();  // finds which side to go
+			whichWay = findWay(playerLoc, ghostLoc);  // finds which side to go
 
 			switch (whichWay)
 			{
@@ -282,13 +282,70 @@ int Board::getGhostCount(int level)
 	return m_ghosts[level].size();
 }
 
-string Board::findWay(Location playerLoc, Location ghostLoc)
+int Board::findWay(Location playerLoc, Location ghostLoc)
 {
-	if (ghostLoc.col < playerLoc.col &&
-		ghostLoc.col < playerLoc.col)
+	if (ghostLoc.col > playerLoc.col &&
+		ghostLoc.row > playerLoc.row)
 	{
-		return "TOP_LEFT";
+		return TOP_LEFT;
 	}
+	if (ghostLoc.col < playerLoc.col &&
+		ghostLoc.row > playerLoc.row)
+	{
+		return TOP_RIGHT;
+	}
+	if (ghostLoc.col < playerLoc.col &&
+		ghostLoc.row < playerLoc.row)
+	{
+		return BOTTOM_RIGHT;
+	}
+	if (ghostLoc.col > playerLoc.col &&
+		ghostLoc.row < playerLoc.row)
+	{
+		return BOTTOM_LEFT;
+	}
+	return 0;  // none of the above = 0
+}
+
+int Board::countSpaces(int level, Location ghostLoc, string way)
+{
+	int row = ghostLoc.row,
+		col = ghostLoc.col,
+		spaces = 0;  // how many spaces we counted
+
+	if (way == "top")
+	{
+		for (int i = row -1 ; m_map[i][col] != WALL && 
+			                  m_map[i][col] != DOOR ; i--)
+		{
+			spaces++;
+		}
+	}
+	if (way == "right")
+	{
+		for (int i = col +1 ; m_map[row][i] != WALL &&
+			                  m_map[row][i] != DOOR; i++)
+		{
+			spaces++;
+		}
+	}
+	if (way == "bottom")
+	{
+		for (int i = row +1 ; m_map[i][col] != WALL &&
+			                  m_map[i][col] != DOOR; i++)
+		{
+			spaces++;
+		}
+	}
+	if (way == "left")
+	{
+		for (int i = col -1 ; m_map[row][i] != WALL &&
+			                  m_map[row][i] != DOOR; i++)
+		{
+			spaces++;
+		}
+	}
+	return spaces;
 }
 
 bool Board::GhostCanMove(int level, Location loc)
