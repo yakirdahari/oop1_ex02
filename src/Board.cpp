@@ -96,8 +96,6 @@ void Board::Build(Player& player)
 void Board::updateMap(Player& player)
 {
 	system("cls");
-	
-	//int level = player.getLevel() + 1;
 
 	for (int i = 0 ; i < m_map.size(); i++)
 	{
@@ -136,6 +134,7 @@ bool Board::PlayerCanMove(Player& player, const Location new_loc)
 		player.superPacman();
 		break;
 	}
+	moveAllGhosts(player);
 	if (player.isSuperPacman())
 	{
 		m_map[loc.row][loc.col] = ' ';
@@ -191,36 +190,58 @@ bool Board::movePlayer(Player& player, int key)
 	return false;  // no move made
 }
 
-void Board::moveGhosts(const Player& player)
+void Board::moveAllGhosts(const Player& player)
 {
 	int level = player.getLevel();
 	Location playerLoc = player.getLocation();
-	int whichWay;
+	int whichWay,
+		top, right, bottom, left;
 
 	// go through each ghost in the map that is alive
-	for (int i = 0; i < m_ghosts[level].size() ; i++)
+	for (size_t i = 0; i < m_ghosts[level].size() ; i++)
 	{
 		if (m_ghosts[level][i].isAlive())
 		{
+			Ghost& ghost = m_ghosts[level][i];
 			Location ghostLoc = m_ghosts[level][i].getLocation();
 			whichWay = findWay(playerLoc, ghostLoc);  // finds which side to go
 
 			switch (whichWay)
 			{
 			case TOP_LEFT:
-				int top = countSpaces(level, ghostLoc, "top"),
-					left = countSpaces(level, ghostLoc, "left");
-				break;
+				top = countSpaces(ghostLoc, "top");
+				left = countSpaces(ghostLoc, "left");
+				if (top > left) { moveGhost(ghost, "top"); return; }
+				if (top < left) { moveGhost(ghost, "left"); return; }
+				break; // top == left
 			case TOP_RIGHT:
-				break;
+				top = countSpaces(ghostLoc, "top");
+				right = countSpaces(ghostLoc, "right");
+				if (top > right) { moveGhost(ghost, "top"); return; }
+				if (top < right) { moveGhost(ghost, "right"); return; }
+				break; // top == right
 			case BOTTOM_RIGHT:
-				break;
+				bottom = countSpaces(ghostLoc, "bottom");
+				right = countSpaces(ghostLoc, "right");
+				if (bottom > right) { moveGhost(ghost, "bottom"); return; }
+				if (bottom < right) { moveGhost(ghost, "right"); return; }
+				break; // bottom == right
 			case BOTTOM_LEFT:
-				break;
+				bottom = countSpaces(ghostLoc, "bottom");
+				left = countSpaces(ghostLoc, "left");
+				if (bottom > left) { moveGhost(ghost, "bottom"); return; }
+				if (bottom < left) { moveGhost(ghost, "left"); return; }
+				break; // bottom == left
 			}
-
-			//Location new_loc = find_way()
-			//canGhostMove(player_loc, ghost_loc);
+			// if none of the above we go through the longest way
+			top = countSpaces(ghostLoc, "top");
+			right = countSpaces(ghostLoc, "right");
+			bottom = countSpaces(ghostLoc, "bottom");
+			left = countSpaces(ghostLoc, "left");
+			if (top > right && top > bottom && top > left) { moveGhost(ghost, "top"); return; }
+			if (right > top && right > bottom && right > left) { moveGhost(ghost, "right"); return; }
+			if (bottom > top && bottom > right && bottom > left) { moveGhost(ghost, "bottom"); return; }
+			if (left > top && left > right && left > bottom) { moveGhost(ghost, "left"); return; }
 		}
 	}
 }
@@ -277,7 +298,7 @@ int Board::getCookieCount(Player& player)
 	return m_cookieCount[player.getLevel()];
 }
 
-int Board::getGhostCount(int level)
+size_t Board::getGhostCount(int level)
 {
 	return m_ghosts[level].size();
 }
@@ -307,7 +328,7 @@ int Board::findWay(Location playerLoc, Location ghostLoc)
 	return 0;  // none of the above = 0
 }
 
-int Board::countSpaces(int level, Location ghostLoc, string way)
+int Board::countSpaces(Location ghostLoc, string way)
 {
 	int row = ghostLoc.row,
 		col = ghostLoc.col,
@@ -323,8 +344,8 @@ int Board::countSpaces(int level, Location ghostLoc, string way)
 	}
 	if (way == "right")
 	{
-		for (int i = col +1 ; m_map[row][i] != WALL &&
-			                  m_map[row][i] != DOOR; i++)
+		for (int i = col +2 ; m_map[row][i] != WALL &&
+			                  m_map[row][i] != DOOR; i+=2)
 		{
 			spaces++;
 		}
@@ -339,8 +360,8 @@ int Board::countSpaces(int level, Location ghostLoc, string way)
 	}
 	if (way == "left")
 	{
-		for (int i = col -1 ; m_map[row][i] != WALL &&
-			                  m_map[row][i] != DOOR; i++)
+		for (int i = col -2 ; m_map[row][i] != WALL &&
+			                  m_map[row][i] != DOOR; i-=2)
 		{
 			spaces++;
 		}
@@ -348,17 +369,72 @@ int Board::countSpaces(int level, Location ghostLoc, string way)
 	return spaces;
 }
 
-bool Board::GhostCanMove(int level, Location loc)
+bool Board::GhostCanMove(int col, int row)
 {
-	if (m_map[loc.row][loc.col] == WALL ||
-		m_map[loc.row][loc.col] == DOOR)
+	if (m_map[row][col] == WALL ||
+		m_map[row][col] == DOOR)
 	{
 		return false;
 	}
 	return true;
 }
 
-// Closing file
+void Board::moveGhost(Ghost& ghost, string way)
+{
+	Location ghostLoc = ghost.getLocation();
+	char m_temp = ghost.getTemp();
+	int col = ghostLoc.col;
+	int row = ghostLoc.row;
+
+	if (way == "top")
+	{
+		m_map[row][col] = m_temp;
+		row--;
+		if (GhostCanMove(col, row))
+		{
+			ghost.setTemp(m_map[row][col]);  // store what ghost erased
+			m_map[row][col] = '&';
+			ghost.setLocation(col, row);
+		}
+	}
+	if (way == "right")
+	{
+		m_map[row][col] = m_temp;
+		col++;
+		col++;
+		if (GhostCanMove(col, row))
+		{
+			ghost.setTemp(m_map[row][col]);  // store what ghost erased
+			m_map[row][col] = '&';
+			ghost.setLocation(col, row);
+		}
+	}
+	if (way == "bottom")
+	{
+		m_map[row][col] = m_temp;
+		row++;
+		if (GhostCanMove(col, row))
+		{
+			ghost.setTemp(m_map[row][col]);  // store what ghost erased
+			m_map[row][col] = '&';
+			ghost.setLocation(col, row);
+		}
+		
+	}
+	if (way == "left")
+	{
+		m_map[row][col] = m_temp;
+		col--;
+		col--;
+		if (GhostCanMove(col, row))
+		{
+			ghost.setTemp(m_map[row][col]);  // store what ghost erased
+			m_map[row][col] = '&';
+			ghost.setLocation(col, row);
+		}
+	}
+}
+
 Board::~Board()
 {
 	

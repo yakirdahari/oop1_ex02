@@ -1,19 +1,31 @@
 # ninja log v5
-4	39	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-71	1825	6914383902070478	CMakeFiles/oop1_ex02.dir/src/io.cpp.obj	bf670428af52f1be
-59	3683	6914383920624921	CMakeFiles/oop1_ex02.dir/src/Player.cpp.obj	9b669b03ce034374
-43	6722	6914383950985249	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
-73	6836	6914383952134789	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	866be8abd235864b
-11	42	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-44	6964	6914384602189516	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
 11	39	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-40	131	6914384994938942	CMakeFiles/oop1_ex02.dir/src/Ghost.cpp.obj	6702ae74e56ccfaf
-131	542	6914384998676553	oop1_ex02.exe	4b28ac8031abd4d5
-14	46	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-48	6128	6914386606834012	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
-6129	6317	6914386608203573	oop1_ex02.exe	4b28ac8031abd4d5
-16	82	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-87	7134	6914390197647544	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
-94	7144	6914390197747506	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	866be8abd235864b
-84	7840	6914390204685390	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7840	8029	6914390206132071	oop1_ex02.exe	4b28ac8031abd4d5
+75	2876	6914625262020042	CMakeFiles/oop1_ex02.dir/src/io.cpp.obj	bf670428af52f1be
+77	8204	6914634615250686	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	866be8abd235864b
+66	5265	6914634585492453	CMakeFiles/oop1_ex02.dir/src/Player.cpp.obj	9b669b03ce034374
+59	8125	6914634614430766	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
+41	7112	6914640890879194	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
+53	1381	6914625246545009	CMakeFiles/oop1_ex02.dir/src/Ghost.cpp.obj	6702ae74e56ccfaf
+7112	7310	6914640892318630	oop1_ex02.exe	4b28ac8031abd4d5
+12	45	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
+51	10126	6914655279389345	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	866be8abd235864b
+49	10225	6914655280379027	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
+46	11758	6914655295689213	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
+11758	12000	6914655297518616	oop1_ex02.exe	4b28ac8031abd4d5
+12	41	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
+43	9360	6914656547416542	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
+9361	9565	6914656549061242	oop1_ex02.exe	4b28ac8031abd4d5
+9	48	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
+56	1623	6914666889735561	CMakeFiles/oop1_ex02.dir/src/Ghost.cpp.obj	6702ae74e56ccfaf
+54	11868	6914666992207764	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
+77	11925	6914666992797551	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	866be8abd235864b
+50	13584	6914667009387790	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
+13584	13809	6914667011157231	oop1_ex02.exe	4b28ac8031abd4d5
+11	40	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
+44	9381	6914676357999035	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
+42	10948	6914676373614010	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
+10948	11193	6914676375543440	oop1_ex02.exe	4b28ac8031abd4d5
+11	46	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
+52	6142	6914678295740452	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
+48	7254	6914678306758580	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
+7254	7431	6914678308199790	oop1_ex02.exe	4b28ac8031abd4d5

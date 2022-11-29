@@ -17,8 +17,8 @@ public:
 	void levelUp();
 	int getLevel()const;
 	int getLives()const;
-	int getPoints()const;
-	void givePoints(int x);
+	size_t getPoints()const;
+	void givePoints(size_t x);
 	Location getSpawn()const;
 	Location getLocation()const;
 	void superPacman();
@@ -31,6 +31,6 @@ private:
 	std::vector<Location> m_spawnList;
 	int m_level;
 	int m_lives;
-	int m_points;
+	size_t m_points;
 	int m_movesLeft;  // how many moves left till super pacman is over
 };

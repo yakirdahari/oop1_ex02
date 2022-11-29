@@ -21,7 +21,6 @@ void Controller::run()
         case SpecialKey:
             if (handleSpecialKey())  // if moved
             {
-                m_board.moveGhosts(m_player);
                 m_board.updateMap(m_player);
             }
             break;
@@ -33,7 +32,7 @@ void Controller::run()
         if (m_board.getCookieCount(m_player) == 0 &&
             m_player.getLevel() +1 != 3)
         {
-            int ghostsLeft = m_board.getGhostCount(m_player.getLevel());
+            size_t ghostsLeft = m_board.getGhostCount(m_player.getLevel());
             m_player.levelUp();
             m_player.givePoints( 50 + (ghostsLeft * 2) );
             m_board.loadLevel(m_player);

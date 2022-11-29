@@ -43,12 +43,12 @@ int Player::getLives() const
 	return m_lives;
 }
 
-int Player::getPoints() const
+size_t Player::getPoints() const
 {
 	return m_points;
 }
 
-void Player::givePoints(int x)
+void Player::givePoints(size_t x)
 {
 	m_points += x;
 }

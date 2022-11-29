@@ -2,15 +2,16 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <cstdlib>
 #include <vector>
 #include "Location.h"
 #include "Ghost.h"
+#include <ctime>
 
 using std::vector;
 using std::string;
 using std::cout;
 using std::endl;
+using std::time;
 
 class Player;
 class Board
@@ -22,14 +23,15 @@ public:
 	void updateMap(Player& player);
 	bool PlayerCanMove(Player& player, const Location loc);
 	bool movePlayer(Player& player, int key);
-	void moveGhosts(const Player& player);
+	void moveAllGhosts(const Player& player);
 	void loadLevel(Player& player);
 	void openRandomDoor(const int level);
 	int getCookieCount(Player& player);
-	int getGhostCount(int level);
+	size_t getGhostCount(int level);
 	int findWay(Location playerLoc, Location ghostLoc);
-	int countSpaces(int level, Location ghostLoc, string way);
-	bool GhostCanMove(int level, Location loc);
+	int countSpaces(Location ghostLoc, string way);
+	bool GhostCanMove(int col, int row);
+	void moveGhost(Ghost& ghost, string way);
 	~Board();
 
 private:
