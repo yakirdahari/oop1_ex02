@@ -1,17 +1,11 @@
 # ninja log v5
-16	48	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af
+11	40	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af
 75	1811	6915302306214713	CMakeFiles/oop1_ex02.dir/src/io.cpp.obj	a7a5779c6d32fb5e
-77	6730	6915302355374858	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	c731018334371200
-40	304	6915308315866146	build.ninja	3d3dc1e06d05caa4
-67	3800	6915302326074631	CMakeFiles/oop1_ex02.dir/src/Player.cpp.obj	e77733467dbbbf03
-51	6735	6915302355428534	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	f0d58f651b881dbb
-49	7143	6915304380229002	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	efd7b63f57a29ecc
-7143	7360	6915304381942694	oop1_ex02.exe	58c8fa4dfcafce1d
-53	606	6915302294028605	CMakeFiles/oop1_ex02.dir/src/Ghost.cpp.obj	3bb126a1aee56537
-13	44	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af
-46	7044	6915312849410318	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	efd7b63f57a29ecc
-7045	7270	6915312851113723	oop1_ex02.exe	58c8fa4dfcafce1d
-13	47	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af
-48	6855	6915315046312834	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	efd7b63f57a29ecc
+45	6515	6915469897802741	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	c731018334371200
+40	304	6915470145406921	build.ninja	3d3dc1e06d05caa4
+43	3465	6915469867302498	CMakeFiles/oop1_ex02.dir/src/Player.cpp.obj	e77733467dbbbf03
+41	6537	6915469898002672	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	f0d58f651b881dbb
+39	7383	6915469906460469	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	efd7b63f57a29ecc
 6856	7074	6915315048042156	oop1_ex02.exe	58c8fa4dfcafce1d
-10	38	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af
+45	422	6915469398225059	CMakeFiles/oop1_ex02.dir/src/Ghost.cpp.obj	3bb126a1aee56537
+12	45	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	9f5be947d5b1f2af

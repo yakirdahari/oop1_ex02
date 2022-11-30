@@ -33,10 +33,10 @@ Location Ghost::getSpawn() const
 	return m_spawn;
 }
 
-// saves what ghost erases to bring it back later
+// saving what ghost erases to bring it back later
+// also making sure ghost doesn't eat our stuff
 void Ghost::setTemp(char c)
 {
-	// so we don't replicate 
 	switch (c)
 	{
 	case 'a':
@@ -65,9 +65,4 @@ void Ghost::setTemp(char c)
 void Ghost::died()
 {
 	m_alive = false;
-}
-
-void Ghost::revive()
-{
-	m_alive = true;
 }

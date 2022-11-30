@@ -27,21 +27,23 @@ public:
 	void moveAllGhosts(Player& player);
 	void loadLevel(Player& player);
 	void openRandomDoor(const int level);
-	int getCookieCount(Player& player);
+	int getCookieCount(const Player& player);
 	int getGhostCount(int level);
 	int findWay(Location playerLoc, Location ghostLoc);
 	int countSpaces(Location ghostLoc, string way);
 	bool GhostCanMove(int col, int row);
 	void moveGhost(Ghost& ghost, string way);
 	void playerDied(Player& player);
+	void checkIfGhostTookSomething(const Ghost& ghost, Player& player);
 	~Board();
 
 private:
 	vector<int> m_cookieCount;  // amount of cookies per map
 	vector<int> m_ghostCount;    // amount of ghosts per map
+	vector<int> m_keyCount;    // amount of keys per map
 	vector<string> m_map;  // current map
 	vector<vector<string>> m_maps;  // map list
-	vector<vector<Location>> m_doors;  // stores all door locations
+	vector<vector<Location>> m_doors;  // stores door locations per map
 	vector<vector<Ghost>> m_ghosts;  // list of ghosts for each map
 	std::ifstream m_file;
 };

@@ -48,7 +48,7 @@ size_t Player::getPoints() const
 	return m_points;
 }
 
-void Player::givePoints(size_t x)
+void Player::givePoints(int x)
 {
 	m_points += x;
 }

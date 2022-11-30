@@ -11,7 +11,6 @@ public:
 	Location getSpawn() const;
 	void setTemp(char c);
 	void died();
-	void revive();
 	
 private:
 	Location m_location;

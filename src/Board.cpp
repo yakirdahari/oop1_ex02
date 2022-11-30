@@ -96,30 +96,39 @@ void Board::Build(Player& player)
 	}
 }
 
+// when pacman dies, send everyone back to spawn
 void Board::rebuild(Player& player)
 {
 	int level = player.getLevel();
 	Location playerSpawn = player.getSpawn();
 	Location playerLoc = player.getLocation();
-	
-	m_map[playerLoc.row][playerLoc.col] = ' ';
-	player.setLocation(playerSpawn);
+
+	player.setSpawn();
 	playerLoc = player.getLocation(); // update location
 	m_map[playerLoc.row][playerLoc.col] = 'a';
 
 	for (int i = 0; i < m_ghosts[level].size(); i++)
 	{
 		Ghost& ghost = m_ghosts[level][i];
+		Location ghostSpawn = ghost.getSpawn();
+		Location ghostLoc = ghost.getLocation();
 		
 		if (ghost.isAlive())
 		{
-			Location ghostSpawn = ghost.getSpawn();
-			Location ghostLoc = ghost.getLocation();
+			// put back what ghost stepped on and send it back to spawn
+			//m_map[ghostLoc.row][ghostLoc.col] = ghost.getTemp();
+			//ghost.setTemp(' ');  // reset temp
 			m_map[ghostLoc.row][ghostLoc.col] = ' ';
 			ghost.setLocation(ghostSpawn.col, ghostSpawn.row);
 			ghostLoc = ghost.getLocation();
 			m_map[ghostLoc.row][ghostLoc.col] = '&';
 		}
+		if (!ghost.isAlive())
+		{
+			ghost.setLocation(ghostSpawn.col, ghostSpawn.row);
+			m_map[ghostLoc.row][ghostLoc.col] = ' ';
+		}
+		checkIfGhostTookSomething(ghost, player);
 	}
 
 	
@@ -157,10 +166,13 @@ bool Board::PlayerCanMove(Player& player, const Location new_loc)
 		if (!player.isSuperPacman())
 		{
 			return false;  // not super pacman
-		}
+		}  
 	case KEY:
 		player.givePoints(7);
-		openRandomDoor(level);
+		if (!m_doors[level].empty())
+		{
+			openRandomDoor(level);
+		}
 		break;
 	case GIFT:
 		player.givePoints(5);
@@ -183,6 +195,7 @@ bool Board::PlayerCanMove(Player& player, const Location new_loc)
 	return true;
 }
 
+// based on key input checks if player can move there
 bool Board::movePlayer(Player& player, int key)
 {
 	Location new_loc = player.getLocation();
@@ -244,6 +257,7 @@ void Board::moveAllGhosts(Player& player)
 				if (player.isSuperPacman())
 				{
 					// delete ghost
+					checkIfGhostTookSomething(ghost, player);
 					m_map[ghostLoc.row][ghostLoc.col] = '@';
 					m_ghostCount[level]--;
 					ghost.died();
@@ -324,8 +338,9 @@ void Board::moveAllGhosts(Player& player)
 				if (player.isSuperPacman())
 				{
 					// delete ghost
-					m_map[ghostLoc.row][ghostLoc.col] = '@';
+					//m_map[ghostLoc.row][ghostLoc.col] = '@';
 					m_ghostCount[level]--;
+					checkIfGhostTookSomething(ghost, player);
 					ghost.died();
 					continue;
 				}
@@ -335,6 +350,7 @@ void Board::moveAllGhosts(Player& player)
 	}
 }
 
+// loads maps based on player's level
 void Board::loadLevel(Player& player)
 {
 	int level = player.getLevel();
@@ -347,10 +363,11 @@ void Board::loadLevel(Player& player)
 	}
 }
 
+// when key is obtained a random door will open
 void Board::openRandomDoor(const int level)
 {
 	srand(time(NULL));
-	int x = rand() % m_doors.size();
+	int x = rand() % m_doors[level].size();
 	Location door = m_doors[level][x];
 	vector<Location> temp1;
 	vector<vector<Location>> temp2;
@@ -359,7 +376,7 @@ void Board::openRandomDoor(const int level)
 
 	// my algorithm to remove random door x from the 2d vector of doors
 	// (1) we copy all doors of current level except x to temp1
-	// (2) we copy all door vectors of all levels except current level
+	// (2) we copy door vectors of all levels except current level
 	// (3) for current level we copy temp1 which doesn't have x in it
 	// (4) temp2 is now m_doors without x in it so we copy temp2 to m_doors
 	for (int i = 0; i < m_doors[level].size(); i++)
@@ -383,7 +400,7 @@ void Board::openRandomDoor(const int level)
 	m_doors = temp2;
 }
 
-int Board::getCookieCount(Player& player)
+int Board::getCookieCount(const Player& player)
 {
 	return m_cookieCount[player.getLevel()];
 }
@@ -393,6 +410,7 @@ int Board::getGhostCount(int level)
 	return m_ghostCount[level];
 }
 
+// ghost AI figures which side player is located
 int Board::findWay(Location playerLoc, Location ghostLoc)
 {
 	if (ghostLoc.col > playerLoc.col &&
@@ -472,7 +490,6 @@ bool Board::GhostCanMove(int col, int row)
 void Board::moveGhost(Ghost& ghost, string way)
 {
 	Location ghostLoc = ghost.getLocation();
-	char m_temp = ghost.getTemp();
 	int col = ghostLoc.col;
 	int row = ghostLoc.row;
 
@@ -531,6 +548,30 @@ void Board::playerDied(Player& player)
 {
 	player.died();
 	rebuild(player);
+}
+
+// sometimes ghosts are killed and don't bring back the objects they stepped on
+// so we find out what it took
+void Board::checkIfGhostTookSomething(const Ghost& ghost, Player& player)
+{
+	char c = ghost.getTemp();
+	int level = player.getLevel();
+
+	switch (c)
+	{
+	case '*': player.givePoints(2);
+		      m_cookieCount[level]--;  // ghost took our cookie!
+		break;
+	case '%': player.givePoints(7);
+		      if (m_doors[level].size() != 0)
+		      {
+				  openRandomDoor(level);   // ghost took our key!
+			  }
+		      break;
+	case '$': player.givePoints(5);    // ghost took our gift
+		      player.superPacman();
+	}
+	//ghost.setTemp(' ');  // return temp to default
 }
 
 Board::~Board()

@@ -35,8 +35,8 @@ void Controller::run()
             break;
         }
         // checking if reached next map + load
-        if (m_board.getCookieCount(m_player) == 0 &&
-            m_player.getLevel() +1 != 3)
+        if (m_board.getCookieCount(m_player) -1 == 0 &&
+            m_player.getLevel() +1 != 4)
         {
             int level = m_player.getLevel();
             int ghostsLeft = m_board.getGhostCount(level);

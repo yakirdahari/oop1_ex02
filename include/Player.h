@@ -18,7 +18,7 @@ public:
 	int getLevel()const;
 	int getLives()const;
 	size_t getPoints()const;
-	void givePoints(size_t x);
+	void givePoints(int x);
 	Location getSpawn()const;
 	Location getLocation()const;
 	void superPacman();
