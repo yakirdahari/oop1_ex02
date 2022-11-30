@@ -110,12 +110,16 @@ void Board::rebuild(Player& player)
 	for (int i = 0; i < m_ghosts[level].size(); i++)
 	{
 		Ghost& ghost = m_ghosts[level][i];
-		Location ghostSpawn = ghost.getSpawn();
-		Location ghostLoc = ghost.getLocation();
-		m_map[ghostLoc.row][ghostLoc.col] = ' ';
-		ghost.setLocation(ghostSpawn.col, ghostSpawn.row);
-		ghostLoc = ghost.getLocation();
-		m_map[ghostLoc.row][ghostLoc.col] = '&';
+		
+		if (ghost.isAlive())
+		{
+			Location ghostSpawn = ghost.getSpawn();
+			Location ghostLoc = ghost.getLocation();
+			m_map[ghostLoc.row][ghostLoc.col] = ' ';
+			ghost.setLocation(ghostSpawn.col, ghostSpawn.row);
+			ghostLoc = ghost.getLocation();
+			m_map[ghostLoc.row][ghostLoc.col] = '&';
+		}
 	}
 
 	
@@ -234,9 +238,7 @@ void Board::moveAllGhosts(Player& player)
 			Ghost& ghost = m_ghosts[level][i];
 			Location ghostLoc = m_ghosts[level][i].getLocation();
 
-			whichWay = findWay(playerLoc, ghostLoc);  // finds which side to go
-
-			// check if was eaten before moving
+			// check if there's collision between ghost and player
 			if (playerLoc == ghostLoc)
 			{
 				if (player.isSuperPacman())
@@ -250,52 +252,54 @@ void Board::moveAllGhosts(Player& player)
 				playerDied(player);  // not super pacman
 			}
 
+			whichWay = findWay(playerLoc, ghostLoc);  // finds which side to go
+
 			switch (whichWay)
 			{
 			case TOP_LEFT:
 				top = countSpaces(ghostLoc, "top");
 				left = countSpaces(ghostLoc, "left");
 				if (top < left && top == 0) { moveGhost(ghost, "left"); continue; }
-				if (top > left && left == 0) { moveGhost(ghost, "top"); continue; }
+				else if (top > left && left == 0) { moveGhost(ghost, "top"); continue; }
 				break; // top == left
 			case TOP_RIGHT:
 				top = countSpaces(ghostLoc, "top");
 				right = countSpaces(ghostLoc, "right");
 				if (top < right && top == 0) { moveGhost(ghost, "right"); continue; }
-				if (top > right && right == 0) { moveGhost(ghost, "top"); continue; }
+				else if (top > right && right == 0) { moveGhost(ghost, "top"); continue; }
 				break; // top == right
 			case BOTTOM_RIGHT:
 				bottom = countSpaces(ghostLoc, "bottom");
 				right = countSpaces(ghostLoc, "right");
 				if (bottom < right && bottom == 0) { moveGhost(ghost, "right"); continue; }
-				if (bottom > right && right == 0) { moveGhost(ghost, "bottom"); continue; }
+				else if (bottom > right && right == 0) { moveGhost(ghost, "bottom"); continue; }
 				break; // bottom == right
 			case BOTTOM_LEFT:
 				bottom = countSpaces(ghostLoc, "bottom");
 				left = countSpaces(ghostLoc, "left");
 				if (bottom < left && bottom == 0) { moveGhost(ghost, "left"); continue; }
-				if (bottom > left && left == 0) { moveGhost(ghost, "bottom"); continue; }
+				else if (bottom > left && left == 0) { moveGhost(ghost, "bottom"); continue; }
 				break; // bottom == left
 			}
 			// go towards player if none above applies
 			if (playerLoc.col > ghostLoc.col &&
 				playerLoc.row == ghostLoc.row)
-			{ 
+			{
 				moveGhost(ghost, "right");
 			}
 			else if (playerLoc.col < ghostLoc.col &&
-				     playerLoc.row == ghostLoc.row)
-			{ 
+				playerLoc.row == ghostLoc.row)
+			{
 				moveGhost(ghost, "left");
 			}
 			else if (playerLoc.row < ghostLoc.row &&
-				     playerLoc.col == ghostLoc.col)
-			{ 
+				playerLoc.col == ghostLoc.col)
+			{
 				moveGhost(ghost, "top");
 			}
 			else if (playerLoc.row > ghostLoc.row &&
-			         playerLoc.col == ghostLoc.col)
-			{ 
+				playerLoc.col == ghostLoc.col)
+			{
 				moveGhost(ghost, "bottom");
 			}
 
@@ -307,17 +311,25 @@ void Board::moveAllGhosts(Player& player)
 				bottom = countSpaces(ghostLoc, "bottom");
 				left = countSpaces(ghostLoc, "left");
 				if (top > right && top > bottom && top > left) { moveGhost(ghost, "top"); }
-				if (right > top && right > bottom && right > left) { moveGhost(ghost, "right"); }
-				if (bottom > top && bottom > right && bottom > left) { moveGhost(ghost, "bottom"); }
-				if (left > top && left > right && left > bottom) { moveGhost(ghost, "left"); }
+				else if (right > top && right > bottom && right > left) { moveGhost(ghost, "right"); }
+				else if (bottom > top && bottom > right && bottom > left) { moveGhost(ghost, "bottom"); }
+				else if (left > top && left > right && left > bottom) { moveGhost(ghost, "left"); }
 				continue;
 			}
 			// update ghost location and check if player died
-			ghostLoc = m_ghosts[level][i].getLocation();  
-			
-			if (playerLoc == ghostLoc && !player.isSuperPacman())
+			ghostLoc = m_ghosts[level][i].getLocation();
+
+			if (playerLoc == ghostLoc)
 			{
-				playerDied(player);
+				if (player.isSuperPacman())
+				{
+					// delete ghost
+					m_map[ghostLoc.row][ghostLoc.col] = '@';
+					m_ghostCount[level]--;
+					ghost.died();
+					continue;
+				}
+				playerDied(player);  // not super pacman
 			}
 		}
 	}
@@ -517,15 +529,6 @@ void Board::moveGhost(Ghost& ghost, string way)
 // checks if player died
 void Board::playerDied(Player& player)
 {
-	Location loc = player.getLocation();
-	int row = loc.row;
-	int col = loc.col;
-
-	if (player.isSuperPacman())
-	{
-		m_map[row][col] = SUPERPACMAN;
-		return; // didn't die
-	}
 	player.died();
 	rebuild(player);
 }
