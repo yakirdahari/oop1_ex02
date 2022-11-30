@@ -1,15 +1,9 @@
 # ninja log v5
-12	45	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-48	5918	6915462071481614	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	866be8abd235864b
-53	1901	6915145014394058	CMakeFiles/oop1_ex02.dir/src/io.cpp.obj	bf670428af52f1be
-41	3169	6915254910585901	CMakeFiles/oop1_ex02.dir/src/Player.cpp.obj	9b669b03ce034374
-41	765	6915451632318117	CMakeFiles/oop1_ex02.dir/src/Ghost.cpp.obj	6702ae74e56ccfaf
-44	7270	6915462550213917	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-47	5682	6915465367251534	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
-5683	5863	6915465368607763	oop1_ex02.exe	4b28ac8031abd4d5
 10	39	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-47	3903	6915470327361028	CMakeFiles/oop1_ex02.dir/src/Player.cpp.obj	9b669b03ce034374
-43	7077	6915470359580716	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
 49	7079	6915470359580716	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	866be8abd235864b
+53	1901	6915145014394058	CMakeFiles/oop1_ex02.dir/src/io.cpp.obj	bf670428af52f1be
+47	3903	6915470327361028	CMakeFiles/oop1_ex02.dir/src/Player.cpp.obj	9b669b03ce034374
+41	765	6915451632318117	CMakeFiles/oop1_ex02.dir/src/Ghost.cpp.obj	6702ae74e56ccfaf
 40	8538	6915470374156061	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
+43	7077	6915470359580716	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
 8539	8736	6915470375695571	oop1_ex02.exe	4b28ac8031abd4d5
