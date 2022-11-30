@@ -81,6 +81,7 @@ bool Player::isSuperPacman()
 void Player::died()
 {
 	m_lives--;
+	m_movesLeft = 0;
 }
 
 void Player::clear()

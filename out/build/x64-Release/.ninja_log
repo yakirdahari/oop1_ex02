@@ -1,61 +1,11 @@
 # ninja log v5
-10	38	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
+6	40	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
 39	6272	6915149225920235	CMakeFiles/oop1_ex02.dir/src/main.cpp.obj	866be8abd235864b
 53	1901	6915145014394058	CMakeFiles/oop1_ex02.dir/src/io.cpp.obj	bf670428af52f1be
-50	3881	6915145034297691	CMakeFiles/oop1_ex02.dir/src/Player.cpp.obj	9b669b03ce034374
+41	3169	6915254910585901	CMakeFiles/oop1_ex02.dir/src/Player.cpp.obj	9b669b03ce034374
 44	654	6915193135777911	CMakeFiles/oop1_ex02.dir/src/Ghost.cpp.obj	6702ae74e56ccfaf
-39	7055	6915228306194308	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-42	5876	6915228294436762	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
-7056	7236	6915228307574261	oop1_ex02.exe	4b28ac8031abd4d5
-14	43	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-44	7255	6915230843884230	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7255	7444	6915230845336839	oop1_ex02.exe	4b28ac8031abd4d5
-11	40	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-42	7164	6915232190657378	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7164	7352	6915232192182376	oop1_ex02.exe	4b28ac8031abd4d5
-10	35	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-37	7453	6915233481601845	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7453	7651	6915233483024669	oop1_ex02.exe	4b28ac8031abd4d5
-11	42	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-44	7151	6915233849542573	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7152	7323	6915233850879907	oop1_ex02.exe	4b28ac8031abd4d5
-10	36	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-7	46	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-47	7209	6915236443526188	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7209	7385	6915236444947263	oop1_ex02.exe	4b28ac8031abd4d5
-10	39	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-41	7215	6915238693319812	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7215	7390	6915238694745265	oop1_ex02.exe	4b28ac8031abd4d5
-13	53	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-54	6894	6915241489632633	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-6895	7152	6915241491626884	oop1_ex02.exe	4b28ac8031abd4d5
-11	39	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-7	35	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-37	7090	6915243157304833	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7090	7269	6915243158633464	oop1_ex02.exe	4b28ac8031abd4d5
-13	50	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-52	7013	6915245555488957	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7014	7184	6915245556834030	oop1_ex02.exe	4b28ac8031abd4d5
-11	39	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-43	6771	6915247201636213	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
-41	7903	6915247212879017	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7903	8086	6915247214306770	oop1_ex02.exe	4b28ac8031abd4d5
-11	40	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-41	7378	6915248787606011	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7379	7556	6915248788965406	oop1_ex02.exe	4b28ac8031abd4d5
-12	43	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-45	7190	6915249369208433	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7191	7378	6915249370527844	oop1_ex02.exe	4b28ac8031abd4d5
-11	41	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-42	6779	6915249941772471	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-6779	6951	6915249943082770	oop1_ex02.exe	4b28ac8031abd4d5
-12	41	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-43	7129	6915250313059140	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7130	7310	6915250314449643	oop1_ex02.exe	4b28ac8031abd4d5
-12	46	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
-50	6313	6915251640952475	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
-47	7380	6915251651591183	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-7380	7564	6915251652956762	oop1_ex02.exe	4b28ac8031abd4d5
-14	87	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
 88	6927	6915253199721314	CMakeFiles/oop1_ex02.dir/src/Board.cpp.obj	da8fc3af52a40bd
-6927	7106	6915253201037550	oop1_ex02.exe	4b28ac8031abd4d5
+50	6313	6915251640952475	CMakeFiles/oop1_ex02.dir/src/Controller.cpp.obj	c37daf26624097d5
+3170	3328	6915254911755612	oop1_ex02.exe	4b28ac8031abd4d5
+11	41	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
+7	35	0	C:/Users/Yakir/Desktop/oop1_ex02- Yakir_Dahari/out/build/x64-Release/CMakeFiles/cmake.verify_globs	931acac59f65b219
