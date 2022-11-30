@@ -18,7 +18,7 @@ class Board
 {
 public:
 	Board();
-	bool isValid(vector<string> map, Player& player);
+	bool isValid(const vector<string> &map, Player& player);
 	void Build(Player& player);
 	void rebuild(Player& player);
 	void updateMap(Player& player);

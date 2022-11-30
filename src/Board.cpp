@@ -12,7 +12,7 @@ Board::Board() :m_file("Board.txt"), m_cookieCount (0)
 
 // checking if given map is valid
 // also sets spawn location of player and enemies
-bool Board::isValid(vector<string> map, Player& player)
+bool Board::isValid(const vector<string> &map, Player& player)
 {
 	int pacmanCount = 0,
 		cookieCount = 0,
@@ -278,23 +278,23 @@ void Board::moveAllGhosts(Player& player)
 				break; // bottom == left
 			}
 			// go towards player if none above applies
-			if (playerLoc.col == ghostLoc.col +2 || 
-				playerLoc.col == ghostLoc.col +4) 
+			if (playerLoc.col > ghostLoc.col &&
+				playerLoc.row == ghostLoc.row)
 			{ 
 				moveGhost(ghost, "right");
 			}
-			else if (playerLoc.col == ghostLoc.col -2 ||
-				     playerLoc.col == ghostLoc.col -4)
+			else if (playerLoc.col < ghostLoc.col &&
+				     playerLoc.row == ghostLoc.row)
 			{ 
 				moveGhost(ghost, "left");
 			}
-			else if (playerLoc.row == ghostLoc.row -2 ||
-				     playerLoc.row == ghostLoc.row -4)
+			else if (playerLoc.row < ghostLoc.row &&
+				     playerLoc.col == ghostLoc.col)
 			{ 
 				moveGhost(ghost, "top");
 			}
-			else if (playerLoc.row == ghostLoc.row +2 ||
-				     playerLoc.row == ghostLoc.row +4)
+			else if (playerLoc.row > ghostLoc.row &&
+			         playerLoc.col == ghostLoc.col)
 			{ 
 				moveGhost(ghost, "bottom");
 			}
