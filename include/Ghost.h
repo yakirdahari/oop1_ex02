@@ -3,7 +3,7 @@
 class Ghost
 {
 public:
-	Ghost();
+	Ghost(int col, int row);
 	void setLocation(int col, int row);
 	Location getLocation();
 	bool isAlive();

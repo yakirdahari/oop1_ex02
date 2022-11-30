@@ -23,7 +23,7 @@ public:
 	void updateMap(Player& player);
 	bool PlayerCanMove(Player& player, const Location loc);
 	bool movePlayer(Player& player, int key);
-	void moveAllGhosts(const Player& player);
+	void moveAllGhosts(Player& player);
 	void loadLevel(Player& player);
 	void openRandomDoor(const int level);
 	int getCookieCount(Player& player);

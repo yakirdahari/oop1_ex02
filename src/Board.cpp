@@ -22,7 +22,7 @@ bool Board::isValid(vector<string> map, Player& player)
 	Location door(0, 0);
 	vector<Location> doors;
 	vector<Ghost> ghosts;
-	Ghost ghost;
+	
 
 	bool moreThanOneCookie = false;
 	char c;
@@ -38,8 +38,10 @@ bool Board::isValid(vector<string> map, Player& player)
 						 player.addSpawn(x, i);
 				break;
 			case GHOST: 
-				        ghost.setLocation(x, i);
-				        ghosts.push_back(ghost);
+			{
+				Ghost ghost(x, i);
+				ghosts.push_back(ghost);
+			}
 				break;
 			case COOKIE: moreThanOneCookie = true;
 				         cookieCount++;
@@ -68,6 +70,8 @@ bool Board::isValid(vector<string> map, Player& player)
 // Building board
 void Board::Build(Player& player)
 {
+	m_file.seekg(0);  // go to beginning of file
+
 	while (!m_file.eof())
 	{
 		vector<string> map;
@@ -101,9 +105,9 @@ void Board::updateMap(Player& player)
 	{
 		cout << m_map[i] << endl;
 	}
-	std::cout << "Level: " << player.getLevel() +1 <<
+	std::cout << "Level: " << player.getLevel() + 1 <<
 		" Lives: " << player.getLives() <<
-		" Points: " << player.getPoints() << endl;
+		" Points: " << player.getPoints() << " ghosts: " << endl;
 }
 
 bool Board::PlayerCanMove(Player& player, const Location new_loc)
@@ -190,7 +194,7 @@ bool Board::movePlayer(Player& player, int key)
 	return false;  // no move made
 }
 
-void Board::moveAllGhosts(const Player& player)
+void Board::moveAllGhosts(Player& player)
 {
 	int level = player.getLevel();
 	Location playerLoc = player.getLocation();
@@ -198,7 +202,7 @@ void Board::moveAllGhosts(const Player& player)
 		top, right, bottom, left;
 
 	// go through each ghost in the map that is alive
-	for (size_t i = 0; i < m_ghosts[level].size() ; i++)
+	for (int i = 0; i < getGhostCount(level) ; i++)
 	{
 		if (m_ghosts[level][i].isAlive())
 		{
@@ -211,26 +215,26 @@ void Board::moveAllGhosts(const Player& player)
 			case TOP_LEFT:
 				top = countSpaces(ghostLoc, "top");
 				left = countSpaces(ghostLoc, "left");
-				if (top > left) { moveGhost(ghost, "top"); return; }
-				if (top < left) { moveGhost(ghost, "left"); return; }
+				if (top > left) { moveGhost(ghost, "top"); continue; }
+				if (top < left) { moveGhost(ghost, "left"); continue; }
 				break; // top == left
 			case TOP_RIGHT:
 				top = countSpaces(ghostLoc, "top");
 				right = countSpaces(ghostLoc, "right");
-				if (top > right) { moveGhost(ghost, "top"); return; }
-				if (top < right) { moveGhost(ghost, "right"); return; }
+				if (top > right) { moveGhost(ghost, "top"); continue; }
+				if (top < right) { moveGhost(ghost, "right"); continue; }
 				break; // top == right
 			case BOTTOM_RIGHT:
 				bottom = countSpaces(ghostLoc, "bottom");
 				right = countSpaces(ghostLoc, "right");
-				if (bottom > right) { moveGhost(ghost, "bottom"); return; }
-				if (bottom < right) { moveGhost(ghost, "right"); return; }
+				if (bottom > right) { moveGhost(ghost, "bottom"); continue; }
+				if (bottom < right) { moveGhost(ghost, "right"); continue; }
 				break; // bottom == right
 			case BOTTOM_LEFT:
 				bottom = countSpaces(ghostLoc, "bottom");
 				left = countSpaces(ghostLoc, "left");
-				if (bottom > left) { moveGhost(ghost, "bottom"); return; }
-				if (bottom < left) { moveGhost(ghost, "left"); return; }
+				if (bottom > left) { moveGhost(ghost, "bottom"); continue; }
+				if (bottom < left) { moveGhost(ghost, "left"); continue; }
 				break; // bottom == left
 			}
 			// if none of the above we go through the longest way
