@@ -23,6 +23,8 @@ public:
 	Location getLocation()const;
 	void superPacman();
 	bool isSuperPacman();
+	void died();
+	void clear();
 	~Player();
 
 private:

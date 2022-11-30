@@ -78,6 +78,16 @@ bool Player::isSuperPacman()
 	return true;  // still super pacman
 }
 
+void Player::died()
+{
+	m_lives--;
+}
+
+void Player::clear()
+{
+	m_spawnList.clear();
+}
+
 Player::~Player()
 {
 }

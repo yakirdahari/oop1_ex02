@@ -8,10 +8,14 @@ public:
 	Location getLocation();
 	bool isAlive();
 	char getTemp() const;
+	Location getSpawn() const;
 	void setTemp(char c);
+	void died();
+	void revive();
 	
 private:
 	Location m_location;
-	bool alive;
+	bool m_alive;
+	Location m_spawn;  // remember where ghost was first spawned
 	char m_temp; // saves what ghost erases to bring it back later
 };

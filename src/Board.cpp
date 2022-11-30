@@ -16,6 +16,7 @@ bool Board::isValid(vector<string> map, Player& player)
 {
 	int pacmanCount = 0,
 		cookieCount = 0,
+		ghostCount = 0,
 		doorCount = 0,
 		keyCount = 0;
 
@@ -23,7 +24,6 @@ bool Board::isValid(vector<string> map, Player& player)
 	vector<Location> doors;
 	vector<Ghost> ghosts;
 	
-
 	bool moreThanOneCookie = false;
 	char c;
 
@@ -41,6 +41,7 @@ bool Board::isValid(vector<string> map, Player& player)
 			{
 				Ghost ghost(x, i);
 				ghosts.push_back(ghost);
+				ghostCount++;
 			}
 				break;
 			case COOKIE: moreThanOneCookie = true;
@@ -61,6 +62,7 @@ bool Board::isValid(vector<string> map, Player& player)
 	m_cookieCount.push_back(cookieCount);
 	m_doors.push_back(doors);
 	m_ghosts.push_back(ghosts);
+	m_ghostCount.push_back(ghostCount);
 
 	return (doorCount == keyCount) && 
 		   (pacmanCount == 1)      && 
@@ -70,8 +72,6 @@ bool Board::isValid(vector<string> map, Player& player)
 // Building board
 void Board::Build(Player& player)
 {
-	m_file.seekg(0);  // go to beginning of file
-
 	while (!m_file.eof())
 	{
 		vector<string> map;
@@ -96,6 +96,31 @@ void Board::Build(Player& player)
 	}
 }
 
+void Board::rebuild(Player& player)
+{
+	int level = player.getLevel();
+	Location playerSpawn = player.getSpawn();
+	Location playerLoc = player.getLocation();
+	
+	m_map[playerLoc.row][playerLoc.col] = ' ';
+	player.setLocation(playerSpawn);
+	playerLoc = player.getLocation(); // update location
+	m_map[playerLoc.row][playerLoc.col] = 'a';
+
+	for (int i = 0; i < m_ghosts[level].size(); i++)
+	{
+		Ghost& ghost = m_ghosts[level][i];
+		Location ghostSpawn = ghost.getSpawn();
+		Location ghostLoc = ghost.getLocation();
+		m_map[ghostLoc.row][ghostLoc.col] = ' ';
+		ghost.setLocation(ghostSpawn.col, ghostSpawn.row);
+		ghostLoc = ghost.getLocation();
+		m_map[ghostLoc.row][ghostLoc.col] = '&';
+	}
+
+	
+}
+
 // Updating board
 void Board::updateMap(Player& player)
 {
@@ -107,7 +132,7 @@ void Board::updateMap(Player& player)
 	}
 	std::cout << "Level: " << player.getLevel() + 1 <<
 		" Lives: " << player.getLives() <<
-		" Points: " << player.getPoints() << " ghosts: " << endl;
+		" Points: " << player.getPoints() << endl;
 }
 
 bool Board::PlayerCanMove(Player& player, const Location new_loc)
@@ -120,16 +145,16 @@ bool Board::PlayerCanMove(Player& player, const Location new_loc)
 	{
 	case WALL: return false;
 		break;
-	case COOKIE: 
+	case COOKIE:
 		player.givePoints(2);
 		m_cookieCount[level]--;
 		break;
-	case DOOR: 
+	case DOOR:
 		if (!player.isSuperPacman())
 		{
 			return false;  // not super pacman
 		}
-	case KEY: 
+	case KEY:
 		player.givePoints(7);
 		openRandomDoor(level);
 		break;
@@ -138,7 +163,7 @@ bool Board::PlayerCanMove(Player& player, const Location new_loc)
 		player.superPacman();
 		break;
 	}
-	moveAllGhosts(player);
+	// player movement
 	if (player.isSuperPacman())
 	{
 		m_map[loc.row][loc.col] = ' ';
@@ -208,52 +233,101 @@ void Board::moveAllGhosts(Player& player)
 		{
 			Ghost& ghost = m_ghosts[level][i];
 			Location ghostLoc = m_ghosts[level][i].getLocation();
+
 			whichWay = findWay(playerLoc, ghostLoc);  // finds which side to go
+
+			// check if was eaten before moving
+			if (playerLoc == ghostLoc)
+			{
+				if (player.isSuperPacman())
+				{
+					// delete ghost
+					m_map[ghostLoc.row][ghostLoc.col] = '@';
+					m_ghostCount[level]--;
+					ghost.died();
+					continue;
+				}
+				playerDied(player);  // not super pacman
+			}
 
 			switch (whichWay)
 			{
 			case TOP_LEFT:
 				top = countSpaces(ghostLoc, "top");
 				left = countSpaces(ghostLoc, "left");
-				if (top > left) { moveGhost(ghost, "top"); continue; }
-				if (top < left) { moveGhost(ghost, "left"); continue; }
+				if (top < left && top == 0) { moveGhost(ghost, "left"); continue; }
+				if (top > left && left == 0) { moveGhost(ghost, "top"); continue; }
 				break; // top == left
 			case TOP_RIGHT:
 				top = countSpaces(ghostLoc, "top");
 				right = countSpaces(ghostLoc, "right");
-				if (top > right) { moveGhost(ghost, "top"); continue; }
-				if (top < right) { moveGhost(ghost, "right"); continue; }
+				if (top < right && top == 0) { moveGhost(ghost, "right"); continue; }
+				if (top > right && right == 0) { moveGhost(ghost, "top"); continue; }
 				break; // top == right
 			case BOTTOM_RIGHT:
 				bottom = countSpaces(ghostLoc, "bottom");
 				right = countSpaces(ghostLoc, "right");
-				if (bottom > right) { moveGhost(ghost, "bottom"); continue; }
-				if (bottom < right) { moveGhost(ghost, "right"); continue; }
+				if (bottom < right && bottom == 0) { moveGhost(ghost, "right"); continue; }
+				if (bottom > right && right == 0) { moveGhost(ghost, "bottom"); continue; }
 				break; // bottom == right
 			case BOTTOM_LEFT:
 				bottom = countSpaces(ghostLoc, "bottom");
 				left = countSpaces(ghostLoc, "left");
-				if (bottom > left) { moveGhost(ghost, "bottom"); continue; }
-				if (bottom < left) { moveGhost(ghost, "left"); continue; }
+				if (bottom < left && bottom == 0) { moveGhost(ghost, "left"); continue; }
+				if (bottom > left && left == 0) { moveGhost(ghost, "bottom"); continue; }
 				break; // bottom == left
 			}
-			// if none of the above we go through the longest way
-			top = countSpaces(ghostLoc, "top");
-			right = countSpaces(ghostLoc, "right");
-			bottom = countSpaces(ghostLoc, "bottom");
-			left = countSpaces(ghostLoc, "left");
-			if (top > right && top > bottom && top > left) { moveGhost(ghost, "top"); return; }
-			if (right > top && right > bottom && right > left) { moveGhost(ghost, "right"); return; }
-			if (bottom > top && bottom > right && bottom > left) { moveGhost(ghost, "bottom"); return; }
-			if (left > top && left > right && left > bottom) { moveGhost(ghost, "left"); return; }
+			// go towards player if none above applies
+			if (playerLoc.col == ghostLoc.col +2 || 
+				playerLoc.col == ghostLoc.col +4) 
+			{ 
+				moveGhost(ghost, "right");
+			}
+			else if (playerLoc.col == ghostLoc.col -2 ||
+				     playerLoc.col == ghostLoc.col -4)
+			{ 
+				moveGhost(ghost, "left");
+			}
+			else if (playerLoc.row == ghostLoc.row -2 ||
+				     playerLoc.row == ghostLoc.row -4)
+			{ 
+				moveGhost(ghost, "top");
+			}
+			else if (playerLoc.row == ghostLoc.row +2 ||
+				     playerLoc.row == ghostLoc.row +4)
+			{ 
+				moveGhost(ghost, "bottom");
+			}
+
+			// if none above applies, ghost picks the longest path available
+			else
+			{
+				top = countSpaces(ghostLoc, "top");
+				right = countSpaces(ghostLoc, "right");
+				bottom = countSpaces(ghostLoc, "bottom");
+				left = countSpaces(ghostLoc, "left");
+				if (top > right && top > bottom && top > left) { moveGhost(ghost, "top"); }
+				if (right > top && right > bottom && right > left) { moveGhost(ghost, "right"); }
+				if (bottom > top && bottom > right && bottom > left) { moveGhost(ghost, "bottom"); }
+				if (left > top && left > right && left > bottom) { moveGhost(ghost, "left"); }
+				continue;
+			}
+			// update ghost location and check if player died
+			ghostLoc = m_ghosts[level][i].getLocation();  
+			
+			if (playerLoc == ghostLoc && !player.isSuperPacman())
+			{
+				playerDied(player);
+			}
 		}
 	}
 }
 
 void Board::loadLevel(Player& player)
 {
-	m_map.clear();
 	int level = player.getLevel();
+	m_map.clear();
+	
 	for (int i = 0 ; i < m_maps[level].size() ; i++)
 	{
 		string line = m_maps[level][i];
@@ -302,9 +376,9 @@ int Board::getCookieCount(Player& player)
 	return m_cookieCount[player.getLevel()];
 }
 
-size_t Board::getGhostCount(int level)
+int Board::getGhostCount(int level)
 {
-	return m_ghosts[level].size();
+	return m_ghostCount[level];
 }
 
 int Board::findWay(Location playerLoc, Location ghostLoc)
@@ -392,10 +466,11 @@ void Board::moveGhost(Ghost& ghost, string way)
 
 	if (way == "top")
 	{
-		m_map[row][col] = m_temp;
-		row--;
-		if (GhostCanMove(col, row))
+		
+		if (GhostCanMove(col, row -1))
 		{
+			m_map[row][col] = ghost.getTemp();
+			row--;
 			ghost.setTemp(m_map[row][col]);  // store what ghost erased
 			m_map[row][col] = '&';
 			ghost.setLocation(col, row);
@@ -403,11 +478,11 @@ void Board::moveGhost(Ghost& ghost, string way)
 	}
 	if (way == "right")
 	{
-		m_map[row][col] = m_temp;
-		col++;
-		col++;
-		if (GhostCanMove(col, row))
+		if (GhostCanMove(col +2, row))
 		{
+			m_map[row][col] = ghost.getTemp();
+			col++;
+			col++;
 			ghost.setTemp(m_map[row][col]);  // store what ghost erased
 			m_map[row][col] = '&';
 			ghost.setLocation(col, row);
@@ -415,10 +490,10 @@ void Board::moveGhost(Ghost& ghost, string way)
 	}
 	if (way == "bottom")
 	{
-		m_map[row][col] = m_temp;
-		row++;
-		if (GhostCanMove(col, row))
+		if (GhostCanMove(col, row +1))
 		{
+			m_map[row][col] = ghost.getTemp();
+			row++;
 			ghost.setTemp(m_map[row][col]);  // store what ghost erased
 			m_map[row][col] = '&';
 			ghost.setLocation(col, row);
@@ -427,16 +502,32 @@ void Board::moveGhost(Ghost& ghost, string way)
 	}
 	if (way == "left")
 	{
-		m_map[row][col] = m_temp;
-		col--;
-		col--;
-		if (GhostCanMove(col, row))
+		if (GhostCanMove(col -2, row))
 		{
+			m_map[row][col] = ghost.getTemp();
+			col--;
+			col--;
 			ghost.setTemp(m_map[row][col]);  // store what ghost erased
 			m_map[row][col] = '&';
 			ghost.setLocation(col, row);
 		}
 	}
+}
+
+// checks if player died
+void Board::playerDied(Player& player)
+{
+	Location loc = player.getLocation();
+	int row = loc.row;
+	int col = loc.col;
+
+	if (player.isSuperPacman())
+	{
+		m_map[row][col] = SUPERPACMAN;
+		return; // didn't die
+	}
+	player.died();
+	rebuild(player);
 }
 
 Board::~Board()

@@ -19,20 +19,27 @@ void Controller::run()
         {
         case 0:
         case SpecialKey:
-            if (handleSpecialKey())  // if moved
+            // update map and move ghosts if moved or pressed space
+            if (handleSpecialKey())
             {
+                m_board.moveAllGhosts(m_player);
                 m_board.updateMap(m_player);
             }
             break;
         default:
-            handleRegularKey(c);
+            if (handleRegularKey(c))
+            {
+                m_board.moveAllGhosts(m_player);
+                m_board.updateMap(m_player);
+            }
             break;
         }
-        // checking if reached next map and loading it
+        // checking if reached next map + load
         if (m_board.getCookieCount(m_player) == 0 &&
             m_player.getLevel() +1 != 3)
         {
-            size_t ghostsLeft = m_board.getGhostCount(m_player.getLevel());
+            int level = m_player.getLevel();
+            int ghostsLeft = m_board.getGhostCount(level);
             m_player.levelUp();
             m_player.givePoints( 50 + (ghostsLeft * 2) );
             m_board.loadLevel(m_player);
@@ -87,14 +94,16 @@ bool Controller::handleSpecialKey()
     }
     return false;  // no move was made
 }
-void Controller::handleRegularKey(int c)
+bool Controller::handleRegularKey(int c)
 {
     switch (c)
     {
-    case KB_Escape:
-        
-        exit(EXIT_SUCCESS);
+    case KB_Escape: exit(EXIT_SUCCESS);
+        break;
+    case KB_Space: return true;
+        break;
     default:
+        return false;
         break;
     }
 }

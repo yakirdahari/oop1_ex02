@@ -1,40 +1,73 @@
 #include "Ghost.h"
-//#include "Board.h"
 
-Ghost::Ghost(int col, int row) : m_location(col, row), alive(true), m_temp(' ')
+Ghost::Ghost(int col, int row)
+	: m_location(col, row), m_alive(true), 
+	  m_temp(' '), m_spawn(col, row)
 {
 }
 
 void Ghost::setLocation(int col, int row)
 {
-	this->m_location.col = col;
-	this->m_location.row = row;
+	m_location.col = col;
+	m_location.row = row;
 }
 
 Location Ghost::getLocation()
 {
-	return this->m_location;
+	return m_location;
 }
 
 // if ghost still alive
 bool Ghost::isAlive()
 {
-	return this->alive ? true : false;
+	return m_alive ? true : false;
 }
 
 char Ghost::getTemp() const
 {
-	return this->m_temp;
+	return m_temp;
+}
+
+Location Ghost::getSpawn() const
+{
+	return m_spawn;
 }
 
 // saves what ghost erases to bring it back later
 void Ghost::setTemp(char c)
 {
-	// making sure ghost won't eat 'a'
-	if (c == 'a')  
+	// so we don't replicate 
+	switch (c)
 	{
-		this->m_temp = 'a';
-		return;
+	case 'a':
+		m_temp = ' ';
+		break;
+	case '&':
+		m_temp = ' ';
+		break;
+	case '@':
+		m_temp = ' ';
+		break;
+	case '*':
+		m_temp = '*';
+		break;
+	case '%':
+		m_temp = '%';
+		break;
+	case '$':
+		m_temp = '$';
+		break;
+	case ' ':
+		m_temp = ' ';
 	}
-	this->m_temp = c;
+}
+
+void Ghost::died()
+{
+	m_alive = false;
+}
+
+void Ghost::revive()
+{
+	m_alive = true;
 }

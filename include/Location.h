@@ -21,4 +21,13 @@ struct Location
     explicit Location(int col, int row) : col(col), row(row) {}
     int row;
     int col;
+
+    bool operator == (const Location& other) const
+    {
+        if (this->col == other.col && this->row == other.row)
+        {
+            return true;
+        }
+        return false;
+    }
 };

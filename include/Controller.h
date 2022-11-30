@@ -8,6 +8,7 @@
 enum Keys
 {
 	KB_Escape = 27,
+	KB_Space = 32,
 	SpecialKey = 224,
 };
 
@@ -26,11 +27,10 @@ public:
 	void run();
 	bool GameOver();
 	bool handleSpecialKey();
-	void handleRegularKey(int c);
+	bool handleRegularKey(int c);
 	~Controller();
 
 private:
 	Board m_board;
 	Player m_player;
-	//Enemy* m_enemies;
 };
